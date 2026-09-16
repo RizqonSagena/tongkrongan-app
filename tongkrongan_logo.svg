@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#FF6B35"/>
+  
+  <!-- Inner circle -->
+  <circle cx="256" cy="256" r="240" fill="#FFE66D"/>
+  
+  <!-- Tongkongan house shape (simplified) -->
+  <!-- Roof -->
+  <polygon points="256,100 150,200 362,200" fill="#FF6B35"/>
+  
+  <!-- House body -->
+  <rect x="160" y="200" width="192" height="180" fill="#FFFFFF" stroke="#FF6B35" stroke-width="4"/>
+  
+  <!-- Door -->
+  <rect x="220" y="280" width="72" height="100" fill="#8B4513" stroke="#FF6B35" stroke-width="2"/>
+  
+  <!-- Door handle -->
+  <circle cx="280" cy="330" r="6" fill="#FFD700"/>
+  
+  <!-- Windows -->
+  <rect x="170" y="220" width="50" height="50" fill="#87CEEB" stroke="#FF6B35" stroke-width="2"/>
+  <rect x="292" y="220" width="50" height="50" fill="#87CEEB" stroke="#FF6B35" stroke-width="2"/>
+  
+  <!-- Window panes -->
+  <line x1="195" y1="220" x2="195" y2="270" stroke="#FF6B35" stroke-width="2"/>
+  <line x1="170" y1="245" x2="220" y2="245" stroke="#FF6B35" stroke-width="2"/>
+  <line x1="317" y1="220" x2="317" y2="270" stroke="#FF6B35" stroke-width="2"/>
+  <line x1="292" y1="245" x2="342" y2="245" stroke="#FF6B35" stroke-width="2"/>
+  
+  <!-- Friends/People gathering symbol -->
+  <!-- Person 1 -->
+  <circle cx="200" cy="380" r="12" fill="#FF6B35"/>
+  <polygon points="200,395 190,410 210,410" fill="#FF6B35"/>
+  
+  <!-- Person 2 -->
+  <circle cx="256" cy="390" r="12" fill="#FF6B35"/>
+  <polygon points="256,405 246,420 266,420" fill="#FF6B35"/>
+  
+  <!-- Person 3 -->
+  <circle cx="312" cy="380" r="12" fill="#FF6B35"/>
+  <polygon points="312,395 302,410 322,410" fill="#FF6B35"/>
+  
+  <!-- Text below -->
+  <text x="256" y="460" font-family="Arial, sans-serif" font-size="32" font-weight="bold" text-anchor="middle" fill="#FF6B35">TONGKRONGAN</text>
+</svg>

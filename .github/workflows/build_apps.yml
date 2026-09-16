@@ -5,6 +5,9 @@ on:
     branches: [main, develop]
   workflow_dispatch:
 
+env:
+  FLUTTER_VERSION: 3.47.4
+
 jobs:
   build-android:
     name: Build Android APK
@@ -23,53 +26,20 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       
-      - name: Check environment
-        run: |
-          echo "=== Flutter ===" 
-          flutter --version
-          echo "=== Dart ==="
-          dart --version
-          echo "=== Java ==="
-          java -version
-          echo "=== Gradle ==="
-          which gradle
-          echo "=== PWD ==="
-          pwd
-          echo "=== Files ==="
-          ls -la
-          echo "=== tongkrongan_app ==="
-          ls -la tongkrongan_app/
+      - run: cd tongkrongan_app && flutter clean && flutter pub get
+        name: Get dependencies
       
-      - name: Clean flutter
-        run: |
-          cd tongkrongan_app
-          flutter clean
+      - run: cd tongkrongan_app && flutter build apk --release
+        name: Build APK
       
-      - name: Get dependencies
-        run: |
-          cd tongkrongan_app
-          flutter pub get 2>&1 | tail -20
-      
-      - name: Build APK
-        run: |
-          cd tongkrongan_app
-          echo "Starting APK build..."
-          flutter build apk --release 2>&1
-          echo "Build completed, checking output..."
-          ls -la build/app/outputs/flutter-apk/ 2>&1 || echo "flutter-apk not found"
-          find . -name "app-release.apk" -type f 2>&1 || echo "No APK found anywhere"
-      
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        if: always()
+      - uses: actions/upload-artifact@v4
         with:
           name: android-apk
           path: tongkrongan_app/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
-          if-no-files-found: warn
 
   build-ios:
     name: Build iOS IPA
@@ -81,46 +51,24 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       
-      - name: Check environment
-        run: |
-          echo "=== Flutter ===" 
-          flutter --version
-          echo "=== Dart ==="
-          dart --version
-          echo "=== Xcode ==="
-          xcode-select -p
-          echo "=== PWD ==="
-          pwd
-          echo "=== Files ==="
-          ls -la
+      - run: cd tongkrongan_app && flutter clean && flutter pub get
+        name: Get dependencies
       
-      - name: Clean flutter
-        run: |
-          cd tongkrongan_app
-          flutter clean
+      - run: cd tongkrongan_app && flutter build ios --release --no-codesign
+        name: Build iOS
       
-      - name: Get dependencies
-        run: |
-          cd tongkrongan_app
-          flutter pub get 2>&1 | tail -20
+      - run: |
+          cd tongkrongan_app/build/ios/iphoneos
+          mkdir -p Payload
+          cp -r Runner.app Payload/
+          zip -r Runner.ipa Payload/
+        name: Package IPA
       
-      - name: Build iOS
-        run: |
-          cd tongkrongan_app
-          echo "Starting iOS build..."
-          flutter build ios --release --no-codesign 2>&1
-          echo "Build completed, checking output..."
-          ls -la build/ios/iphoneos/ 2>&1 || echo "iphoneos not found"
-          find . -name "Runner.app" -type d 2>&1 || echo "No Runner.app found"
-      
-      - name: Upload IPA
-        uses: actions/upload-artifact@v4
-        if: always()
+      - uses: actions/upload-artifact@v4
         with:
           name: ios-ipa-unsigned
-          path: tongkrongan_app/build/ios/iphoneos/Runner.app
+          path: tongkrongan_app/build/ios/iphoneos/Runner.ipa
           retention-days: 30
-          if-no-files-found: warn

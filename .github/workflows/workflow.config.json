@@ -1,0 +1,118 @@
+{
+  "workflow": {
+    "name": "Build Flutter Apps (APK & IPA)",
+    "file": "build_apps.yml",
+    "version": "1.0",
+    "lastUpdated": "2024",
+    "status": "production",
+    "description": "Automated build workflow for Flutter apps generating Android APK and iOS IPA artifacts"
+  },
+  "artifacts": {
+    "android": {
+      "name": "android-apk",
+      "file": "app-release.apk",
+      "platform": "Android",
+      "buildTime": "45 minutes",
+      "size": "50-100 MB",
+      "type": "unsigned",
+      "runner": "ubuntu-latest"
+    },
+    "ios": {
+      "name": "ios-ipa-unsigned",
+      "file": "Runner.ipa",
+      "platform": "iOS",
+      "buildTime": "60 minutes",
+      "size": "100-200 MB",
+      "type": "unsigned",
+      "runner": "macos-latest"
+    }
+  },
+  "configuration": {
+    "flutter_version": "3.24.0",
+    "java_version": "17",
+    "app_name": "tongkrongan_app",
+    "artifact_retention_days": 30,
+    "parallel_execution": true,
+    "cache_enabled": true,
+    "code_analysis": true,
+    "compression": false
+  },
+  "triggers": {
+    "push_branches": ["main", "develop"],
+    "pull_request_branches": ["main"],
+    "manual_trigger": true
+  },
+  "jobs": [
+    {
+      "name": "build-android",
+      "type": "build",
+      "runner": "ubuntu-latest",
+      "timeout": 45,
+      "steps": 9,
+      "artifact": "android-apk"
+    },
+    {
+      "name": "build-ios",
+      "type": "build",
+      "runner": "macos-latest",
+      "timeout": 60,
+      "steps": 9,
+      "artifact": "ios-ipa-unsigned"
+    },
+    {
+      "name": "notify-completion",
+      "type": "notification",
+      "runner": "ubuntu-latest",
+      "timeout": 5,
+      "depends_on": ["build-android", "build-ios"]
+    }
+  ],
+  "environment_variables": {
+    "FLUTTER_VERSION": {
+      "value": "3.24.0",
+      "description": "Flutter SDK version"
+    },
+    "JAVA_VERSION": {
+      "value": "17",
+      "description": "Java version for Android builds"
+    },
+    "APP_NAME": {
+      "value": "tongkrongan_app",
+      "description": "Flutter app directory name"
+    },
+    "ARTIFACT_RETENTION_DAYS": {
+      "value": "30",
+      "description": "Artifact retention period in days"
+    }
+  },
+  "execution_performance": {
+    "android_build_time": "45 minutes",
+    "ios_build_time": "60 minutes",
+    "total_time_sequential": "105 minutes",
+    "total_time_parallel": "60 minutes",
+    "time_saved_by_parallelization": "45 minutes"
+  },
+  "security": {
+    "signing": "unsigned",
+    "credentials": "none_required_for_unsigned",
+    "production_ready": false,
+    "notes": "For production builds with signing, add secrets to GitHub"
+  },
+  "features": [
+    "Parallel builds",
+    "Automatic artifacts",
+    "Build verification",
+    "Metadata tracking",
+    "Error handling",
+    "Code analysis",
+    "Build caching",
+    "Status reporting",
+    "Artifact retention"
+  ],
+  "documentation": {
+    "full_docs": "BUILD_APPS_DOCUMENTATION.md",
+    "quick_reference": "QUICK_BUILD_REFERENCE.md",
+    "summary": "WORKFLOW_SUMMARY.md",
+    "troubleshooting": "TROUBLESHOOTING.md"
+  }
+}

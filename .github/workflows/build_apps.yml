@@ -50,12 +50,16 @@ jobs:
       - run: flutter build ios --release --no-codesign
         working-directory: tongkrongan_app
       - run: |
+          cd tongkrongan_app/build/ios/iphoneos
           mkdir -p Payload
-          mv build/ios/iphoneos/Runner.app Payload/
-          zip -r -q Runner.ipa Payload
-        working-directory: tongkrongan_app
+          cp -r Runner.app Payload/
+          cd Payload
+          zip -r -q ../Runner.ipa .
+          cd ..
+          ls -lh Runner.ipa
+        shell: bash
       - uses: actions/upload-artifact@v4
         with:
           name: ios-ipa-unsigned
-          path: tongkrongan_app/Runner.ipa
+          path: tongkrongan_app/build/ios/iphoneos/Runner.ipa
           retention-days: 30

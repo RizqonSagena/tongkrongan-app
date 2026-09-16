@@ -21,13 +21,27 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-      - run: flutter clean
-        working-directory: tongkrongan_app
-      - run: flutter pub get
-        working-directory: tongkrongan_app
-      - run: flutter build apk --release
-        working-directory: tongkrongan_app
+      
+      - run: |
+          flutter --version
+          dart --version
+        name: Check versions
+      
+      - run: |
+          cd tongkrongan_app
+          flutter clean
+          flutter pub get
+          flutter build apk --release -v
+        name: Build APK
+      
+      - run: |
+          ls -la tongkrongan_app/build/app/outputs/flutter-apk/ || echo "APK folder not found"
+          find tongkrongan_app/build -name "*.apk" -type f || echo "No APK files found"
+        name: Check APK output
+        if: always()
+      
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: android-apk
           path: tongkrongan_app/build/app/outputs/flutter-apk/app-release.apk
@@ -43,23 +57,28 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-      - run: flutter clean
-        working-directory: tongkrongan_app
-      - run: flutter pub get
-        working-directory: tongkrongan_app
-      - run: flutter build ios --release --no-codesign
-        working-directory: tongkrongan_app
+      
       - run: |
-          cd tongkrongan_app/build/ios/iphoneos
-          mkdir -p Payload
-          cp -r Runner.app Payload/
-          cd Payload
-          zip -r -q ../Runner.ipa .
-          cd ..
-          ls -lh Runner.ipa
-        shell: bash
+          flutter --version
+          dart --version
+        name: Check versions
+      
+      - run: |
+          cd tongkrongan_app
+          flutter clean
+          flutter pub get
+          flutter build ios --release --no-codesign -v
+        name: Build iOS
+      
+      - run: |
+          ls -la tongkrongan_app/build/ios/iphoneos/ || echo "iphoneos folder not found"
+          find tongkrongan_app/build -name "Runner.app" -type d || echo "No Runner.app found"
+        name: Check iOS output
+        if: always()
+      
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: ios-ipa-unsigned
-          path: tongkrongan_app/build/ios/iphoneos/Runner.ipa
+          path: tongkrongan_app/build/ios/iphoneos/Runner.app
           retention-days: 30

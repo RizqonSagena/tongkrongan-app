@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><title>Dashboard - Tongkrongan Admin</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-error-container": "#93000a",
+        "surface-variant": "#e4e1ea",
+        "on-tertiary-fixed-variant": "#005143",
+        "on-tertiary": "#ffffff",
+        "on-secondary": "#ffffff",
+        "on-tertiary-container": "#f4fffa",
+        "on-secondary-fixed-variant": "#673d00",
+        "on-secondary-fixed": "#2b1700",
+        "inverse-primary": "#ffb599",
+        "on-primary-container": "#fffbff",
+        "on-primary": "#ffffff",
+        "error-container": "#ffdad6",
+        "surface-bright": "#fbf8ff",
+        "on-secondary-container": "#724400",
+        "surface-dim": "#dbd9e1",
+        "primary-container": "#ca4b07",
+        "primary": "#a33900",
+        "surface": "#fbf8ff",
+        "secondary": "#875200",
+        "on-tertiary-fixed": "#002019",
+        "secondary-fixed-dim": "#ffb866",
+        "on-primary-fixed-variant": "#7f2b00",
+        "surface-container-low": "#f5f2fb",
+        "surface-tint": "#a73a00",
+        "surface-container-highest": "#e4e1ea",
+        "secondary-fixed": "#ffddba",
+        "surface-container-high": "#eae7ef",
+        "on-surface": "#1b1b21",
+        "background": "#fbf8ff",
+        "inverse-on-surface": "#f2eff8",
+        "tertiary-fixed": "#9df3db",
+        "on-background": "#1b1b21",
+        "secondary-container": "#fdb257",
+        "on-primary-fixed": "#370e00",
+        "tertiary-container": "#28826f",
+        "surface-container-lowest": "#ffffff",
+        "primary-fixed-dim": "#ffb599",
+        "on-surface-variant": "#594139",
+        "outline": "#8d7167",
+        "inverse-surface": "#303036",
+        "primary-fixed": "#ffdbce",
+        "on-error": "#ffffff",
+        "tertiary-fixed-dim": "#81d6c0",
+        "error": "#ba1a1a",
+        "surface-container": "#efecf5",
+        "tertiary": "#006857",
+        "outline-variant": "#e1bfb4"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "space-xl": "2rem",
+        "margin": "1.25rem",
+        "space-xs": "0.25rem",
+        "gutter": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem"
+      },
+      "fontFamily": {
+        "headline-sm": ["Plus Jakarta Sans"],
+        "body-lg": ["Plus Jakarta Sans"],
+        "display": ["Plus Jakarta Sans"],
+        "label-md": ["Plus Jakarta Sans"],
+        "headline-lg": ["Plus Jakarta Sans"],
+        "headline-lg-mobile": ["Plus Jakarta Sans"],
+        "headline-md": ["Plus Jakarta Sans"],
+        "body-md": ["Plus Jakarta Sans"],
+        "body-sm": ["Plus Jakarta Sans"],
+        "label-lg": ["Plus Jakarta Sans"],
+        "label-sm": ["Plus Jakarta Sans"]
+      },
+      "fontSize": {
+        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "display": ["36px", {"lineHeight": "44px", "fontWeight": "800"}],
+        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.4px", "fontWeight": "700"}]
+      }
+    }
+  }
+}</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0 flex-1"><img alt="Brand logo. - Primary color: #e05a1b
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1X-AcKcVO5RpkHoA8BOoBC0hkcjmiCmMkSZ9lS20EKRDHnpeKrvHqgcM0doCN2W2plWgOXYK18miIfKgDct4wBwQXarGvJiiK3Id_LID1Z0MUUZlwjfu6QxJibgGT8a5LK0PsY-uHgS4sxJS9taC1HntDhDPF1oj4krl466Fi__1GkIap0_8vVNkfkJp28HPX7dRoNnWrcriDxbRtb_Yh_mx77NbGFppJWhaeu5lTaIwfA-JMMRkg3N"/><div class="flex flex-col min-w-0"><div class="flex items-center gap-space-xs"><span class="font-label-sm text-label-sm text-primary uppercase tracking-wider bg-primary-fixed px-space-xs py-0.5 rounded-full font-bold">OPERATOR PORTAL</span></div><h1 class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">Dashboard</h1></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Notifikasi Platform" class="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors relative" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-fixed" src="https://lh3.googleusercontent.com/aida/AEtjO1VStkUmA7SxeH2jgzJlJU87MNWZRdbIpRL6bp3nSNYRi9OG0sIq9GbLNYFCXnlKmxdH8g00-VahP0H_LOrzpQucjBUUkaGdkSin9XPbQT-zQ5Vnhnt6YbHwfl3PIgqtAGL_Cwghe3TV0AG5Y0F5mWROK8R393r6WRXh8hK4l-di3bTdfqD4uYU9N_r6yATwZqxhE3yS9JjB4Xo2-efdAcxVZ4mfU_1c0-tEULjmMjhrmFDctSENYhIJmg"/></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Back Action & Sub-Header -->
+<div class="px-margin pt-space-md pb-space-sm flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<button aria-label="Kembali ke Beranda Operasional" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<div class="flex flex-col min-w-0">
+<h2 class="font-headline-md text-headline-md text-on-surface leading-tight truncate">Manajemen Janji Temu &amp; Reservasi</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Koordinasi reservasi kunjungan grup dari customer ke mitra kedai</p>
+</div>
+</div>
+</div>
+<!-- SLA & Live Coordination Pulse Banner -->
+<div class="px-margin py-space-xs">
+<div class="p-space-md rounded-xl bg-secondary-fixed text-on-secondary-fixed shadow-sm relative overflow-hidden">
+<div class="relative z-10 flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-secondary-fixed-variant font-bold">Respon SLA Real-Time</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-lowest/80 px-2 py-0.5 rounded-full text-secondary font-semibold">Shift Siang</span>
+</div>
+<div class="flex items-baseline gap-space-xs mt-0.5">
+<span class="font-display text-[26px] leading-8 font-extrabold text-on-secondary-fixed">12 Menit</span>
+<span class="font-body-sm text-body-sm text-on-secondary-fixed-variant font-medium">rata-rata konfirmasi admin</span>
+</div>
+<div class="flex items-center gap-1.5 pt-1 text-on-secondary-fixed-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">priority_high</span>
+<span class="font-semibold text-primary">3 Janji Menunggu Tindakan Hari Ini</span>
+</div>
+</div>
+<!-- Ambient Graphic Pattern -->
+<div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-primary-fixed-dim/40 pointer-events-none"></div>
+</div>
+</div>
+<!-- Horizontal Filter Chips Carousel -->
+<div class="py-space-sm">
+<div class="flex items-center gap-space-xs overflow-x-auto px-margin no-scrollbar" id="statusFilterBar">
+<button class="filter-chip shrink-0 px-4 h-9 rounded-full font-label-md text-label-md flex items-center gap-1.5 bg-primary text-on-primary shadow-md" data-filter="all" type="button">
+<span>Semua</span>
+<span class="px-1.5 py-0.2 text-[10px] bg-primary-container text-on-primary-container rounded-full">18</span>
+</button>
+<button class="filter-chip shrink-0 px-4 h-9 rounded-full font-label-md text-label-md flex items-center gap-1.5 bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" data-filter="review" type="button">
+<span>Menunggu Review</span>
+<span class="px-1.5 py-0.2 text-[10px] bg-secondary-container text-on-secondary-container rounded-full font-bold">3</span>
+</button>
+<button class="filter-chip shrink-0 px-4 h-9 rounded-full font-label-md text-label-md flex items-center gap-1.5 bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" data-filter="owner" type="button">
+<span>Diproses Owner</span>
+<span class="px-1.5 py-0.2 text-[10px] bg-surface-container-highest text-on-surface-variant rounded-full">2</span>
+</button>
+<button class="filter-chip shrink-0 px-4 h-9 rounded-full font-label-md text-label-md flex items-center gap-1.5 bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" data-filter="confirmed" type="button">
+<span>Dikonfirmasi</span>
+<span class="px-1.5 py-0.2 text-[10px] bg-tertiary-fixed text-on-tertiary-fixed font-bold rounded-full">11</span>
+</button>
+<button class="filter-chip shrink-0 px-4 h-9 rounded-full font-label-md text-label-md flex items-center gap-1.5 bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" data-filter="cancelled" type="button">
+<span>Ditolak / Batal</span>
+</button>
+</div>
+</div>
+<!-- Appointment Card Feed -->
+<div class="px-margin flex flex-col gap-space-md pt-space-xs pb-space-lg">
+<!-- Card 1: Urgent Waiting Review -->
+<div class="bg-surface-container-lowest rounded-[18px] p-space-md shadow-[0_4px_20px_-2px_rgba(110,60,20,0.06),0_2px_6px_-1px_rgba(110,60,20,0.04)] flex flex-col gap-space-sm relative overflow-hidden">
+<!-- Status Badge & Booking ID -->
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-primary font-bold tracking-wide">#TNG-8921</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Selasar Kopi &amp; Ruang Diskusi</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5 font-bold">Dimas Prasetyo</h3>
+</div>
+<div class="shrink-0 flex items-center gap-1 bg-secondary-fixed text-on-secondary-fixed px-2.5 py-1 rounded-full">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<span class="font-label-sm text-label-sm font-semibold">Menunggu Review</span>
+</div>
+</div>
+<!-- Customer Avatar & Trust Metric -->
+<div class="flex items-center gap-space-sm bg-surface-container-low p-space-sm rounded-xl">
+<img class="w-10 h-10 rounded-full object-cover shrink-0" data-alt="A warm portrait of a smiling young Indonesian professional man wearing casual linen shirt with a soft-lit background, high resolution, friendly approachable look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBshPhSTsF2gWrt2hR6CfeN8DAI50rt5olGX1sEa6gkJpcblkAeYyZT2LjWSRwjspZhM2FpS7oG20f6OeBtyA9ACB5McroxJn5CVNIKTS6rZ0ezDvD1lsIclgF_Hskv9luQwjGLGbAtI0i26iqph8fNK2y5jcAabDCW3GDrU02EOBwyR8Zb-RMCoBSR4ouSo_1WGxaQ1rbIPmZzx9_FbPk3VbnDYcXoir-KKPULVulCjOmUqWIPXn8"/>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center gap-1">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Dimas Prasetyo</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Pelanggan Terverifikasi • 5x nongkrong via App</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</button>
+</div>
+<!-- Schedule & Details Grid -->
+<div class="grid grid-cols-2 gap-space-xs bg-surface-container-lowest">
+<div class="bg-surface-container-low p-space-sm rounded-xl flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">calendar_today</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Jadwal Kunjungan</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">Hari Ini, 26 Okt</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">16:00 - 19:00 WIB</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-xl flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">groups</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rombongan</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">6 - 10 Orang</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">WFC &amp; Diskusi Tim</span>
+</div>
+</div>
+</div>
+<!-- Spot Preference & Special Request Bubble -->
+<div class="flex flex-col gap-1.5 text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">deck</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Preferensi:</span>
+<span class="font-body-sm text-body-sm text-on-surface">Meja Panjang Rooftop / Semi-Outdoor</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded-xl flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline shrink-0 mt-0.5">format_quote</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant italic">
+            “Butuh meja dekat banyak colokan, area non-smoking ya kak untuk sesi brainstorm tim remote.”
+          </p>
+</div>
+</div>
+<!-- Workflow Visual Tracker -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-primary font-label-sm text-label-sm font-bold">
+<span class="w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center text-[10px]">1</span>
+<span>Pelanggan</span>
+</div>
+<div class="h-0.5 flex-1 bg-primary mx-1"></div>
+<div class="flex items-center gap-1 text-primary font-label-sm text-label-sm font-bold">
+<span class="w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center text-[10px]">2</span>
+<span>Admin Review</span>
+</div>
+<div class="h-0.5 flex-1 bg-surface-variant mx-1"></div>
+<div class="flex items-center gap-1 text-on-surface-variant opacity-60 font-label-sm text-label-sm">
+<span class="w-5 h-5 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center text-[10px]">3</span>
+<span>Owner Mitra</span>
+</div>
+<div class="h-0.5 flex-1 bg-surface-variant mx-1"></div>
+<div class="flex items-center gap-1 text-on-surface-variant opacity-60 font-label-sm text-label-sm">
+<span class="w-5 h-5 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center text-[10px]">4</span>
+<span>Final</span>
+</div>
+</div>
+<!-- Operator Action Buttons -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<button class="w-full h-12 bg-primary text-on-primary rounded-full font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-[0_8px_24px_-4px_rgba(224,90,27,0.22)] active:scale-98 transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]">send_to_mobile</span>
+<span>Teruskan ke Owner Selasar Kopi</span>
+</button>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="h-11 bg-tertiary-container text-on-tertiary-container rounded-full font-label-md text-label-md flex items-center justify-center gap-1.5 active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Konfirmasi Langsung</span>
+</button>
+<button class="h-11 bg-surface-container text-on-surface rounded-full font-label-md text-label-md flex items-center justify-center gap-1 hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-error">cancel</span>
+<span>Tolak / Reschedule</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Confirmed with Table Allocation -->
+<div class="bg-surface-container-lowest rounded-[18px] p-space-md shadow-[0_4px_20px_-2px_rgba(110,60,20,0.06),0_2px_6px_-1px_rgba(110,60,20,0.04)] flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-primary font-bold tracking-wide">#TNG-8410</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Rumah Kopi Kolaboratif</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5 font-bold">Komunitas Boardgame Jkt</h3>
+</div>
+<div class="shrink-0 flex items-center gap-1 bg-tertiary-fixed text-on-tertiary-fixed px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-label-sm text-label-sm font-semibold">Dikonfirmasi</span>
+</div>
+</div>
+<!-- Detail Card Layout -->
+<div class="p-space-sm bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary font-bold">
+<span class="material-symbols-outlined text-[22px]">casino</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="font-label-md text-label-md font-semibold text-on-surface">12 Orang</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">• Besok, 27 Okt (19:30 WIB)</span>
+</div>
+<span class="font-body-sm text-body-sm text-tertiary font-medium">Meja 4 &amp; 5 Disiapkan (Lantai 2 Semi-Private)</span>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="h-10 bg-surface-container text-on-surface rounded-full font-label-md text-label-md flex items-center justify-center gap-1 hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">info</span>
+<span>Lihat Rincian</span>
+</button>
+<button class="h-10 bg-secondary-container text-on-secondary-container rounded-full font-label-md text-label-md flex items-center justify-center gap-1 font-semibold active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span>Hubungi Tamu</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Completed Archival -->
+<div class="bg-surface-container-lowest rounded-[18px] p-space-md opacity-75 hover:opacity-100 transition-opacity shadow-[0_4px_20px_-2px_rgba(110,60,20,0.06),0_2px_6px_-1px_rgba(110,60,20,0.04)] flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">#TNG-8302</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">Garasi Temu</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Reza Arisandi</h3>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container-highest text-on-surface-variant font-medium">Selesai Kunjungan</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant pt-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">groups</span>
+<span>Arisan Santai • 5 Orang</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">event_available</span>
+<span>25 Okt 2024</span>
+</div>
+</div>
+</div>
+<!-- Warm Delight Empty/Check State Notice -->
+<div class="p-space-md rounded-2xl bg-surface-container-low flex items-center gap-space-md mt-space-xs">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]">coffee</span>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-bold">Semua Jadwal Terkoordinasi!</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Prioritaskan verifikasi kuota tempat duduk minimal 2 jam sebelum waktu kunjungan.</p>
+</div>
+</div>
+</div>
+<!-- Interactive Client-side Script for Chips Filtering UI Feedback -->
+<script>
+    (function() {
+      const chips = document.querySelectorAll('.filter-chip');
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => {
+            c.classList.remove('bg-primary', 'text-on-primary', 'shadow-md');
+            c.classList.add('bg-surface-container', 'text-on-surface');
+          });
+          chip.classList.remove('bg-surface-container', 'text-on-surface');
+          chip.classList.add('bg-primary', 'text-on-primary', 'shadow-md');
+        });
+      });
+    })();
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_24px_0_rgba(30,30,36,0.05)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 transition-colors text-primary font-bold" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-label-sm mt-0.5">Dashboard</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 text-on-surface-variant transition-colors" data-path="kedai" href="#"><span class="material-symbols-outlined text-[22px]">store</span><span class="font-label-sm text-label-sm mt-0.5">Kedai</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 text-on-surface-variant transition-colors" data-path="produk" href="#"><span class="material-symbols-outlined text-[22px]">local_cafe</span><span class="font-label-sm text-label-sm mt-0.5">Produk</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 text-on-surface-variant transition-colors" data-path="konten" href="#"><span class="material-symbols-outlined text-[22px]">perm_media</span><span class="font-label-sm text-label-sm mt-0.5">Konten</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 text-on-surface-variant transition-colors" data-path="profil" href="#"><span class="material-symbols-outlined text-[22px]">admin_panel_settings</span><span class="font-label-sm text-label-sm mt-0.5">Profil</span></a></div></nav></body></html>

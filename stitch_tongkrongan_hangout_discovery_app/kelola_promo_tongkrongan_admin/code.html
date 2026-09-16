@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><title>Konten - Tongkrongan Admin</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-error-container": "#93000a",
+        "surface-variant": "#e4e1ea",
+        "on-tertiary-fixed-variant": "#005143",
+        "on-tertiary": "#ffffff",
+        "on-secondary": "#ffffff",
+        "on-tertiary-container": "#f4fffa",
+        "on-secondary-fixed-variant": "#673d00",
+        "on-secondary-fixed": "#2b1700",
+        "inverse-primary": "#ffb599",
+        "on-primary-container": "#fffbff",
+        "on-primary": "#ffffff",
+        "error-container": "#ffdad6",
+        "surface-bright": "#fbf8ff",
+        "on-secondary-container": "#724400",
+        "surface-dim": "#dbd9e1",
+        "primary-container": "#ca4b07",
+        "primary": "#a33900",
+        "surface": "#fbf8ff",
+        "secondary": "#875200",
+        "on-tertiary-fixed": "#002019",
+        "secondary-fixed-dim": "#ffb866",
+        "on-primary-fixed-variant": "#7f2b00",
+        "surface-container-low": "#f5f2fb",
+        "surface-tint": "#a73a00",
+        "surface-container-highest": "#e4e1ea",
+        "secondary-fixed": "#ffddba",
+        "surface-container-high": "#eae7ef",
+        "on-surface": "#1b1b21",
+        "background": "#fbf8ff",
+        "inverse-on-surface": "#f2eff8",
+        "tertiary-fixed": "#9df3db",
+        "on-background": "#1b1b21",
+        "secondary-container": "#fdb257",
+        "on-primary-fixed": "#370e00",
+        "tertiary-container": "#28826f",
+        "surface-container-lowest": "#ffffff",
+        "primary-fixed-dim": "#ffb599",
+        "on-surface-variant": "#594139",
+        "outline": "#8d7167",
+        "inverse-surface": "#303036",
+        "primary-fixed": "#ffdbce",
+        "on-error": "#ffffff",
+        "tertiary-fixed-dim": "#81d6c0",
+        "error": "#ba1a1a",
+        "surface-container": "#efecf5",
+        "tertiary": "#006857",
+        "outline-variant": "#e1bfb4"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "space-xl": "2rem",
+        "margin": "1.25rem",
+        "space-xs": "0.25rem",
+        "gutter": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem"
+      },
+      "fontFamily": {
+        "headline-sm": ["Plus Jakarta Sans"],
+        "body-lg": ["Plus Jakarta Sans"],
+        "display": ["Plus Jakarta Sans"],
+        "label-md": ["Plus Jakarta Sans"],
+        "headline-lg": ["Plus Jakarta Sans"],
+        "headline-lg-mobile": ["Plus Jakarta Sans"],
+        "headline-md": ["Plus Jakarta Sans"],
+        "body-md": ["Plus Jakarta Sans"],
+        "body-sm": ["Plus Jakarta Sans"],
+        "label-lg": ["Plus Jakarta Sans"],
+        "label-sm": ["Plus Jakarta Sans"]
+      },
+      "fontSize": {
+        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "display": ["36px", {"lineHeight": "44px", "fontWeight": "800"}],
+        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.4px", "fontWeight": "700"}]
+      }
+    }
+  }
+}</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0 flex-1"><img alt="Brand logo. - Primary color: #e05a1b
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1X-AcKcVO5RpkHoA8BOoBC0hkcjmiCmMkSZ9lS20EKRDHnpeKrvHqgcM0doCN2W2plWgOXYK18miIfKgDct4wBwQXarGvJiiK3Id_LID1Z0MUUZlwjfu6QxJibgGT8a5LK0PsY-uHgS4sxJS9taC1HntDhDPF1oj4krl466Fi__1GkIap0_8vVNkfkJp28HPX7dRoNnWrcriDxbRtb_Yh_mx77NbGFppJWhaeu5lTaIwfA-JMMRkg3N"/><div class="flex flex-col min-w-0"><div class="flex items-center gap-space-xs"><span class="font-label-sm text-label-sm text-primary uppercase tracking-wider bg-primary-fixed px-space-xs py-0.5 rounded-full font-bold">OPERATOR PORTAL</span></div><h1 class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">Konten</h1></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Notifikasi Platform" class="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors relative" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center pl-space-xs"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-fixed" src="https://lh3.googleusercontent.com/aida/AEtjO1VStkUmA7SxeH2jgzJlJU87MNWZRdbIpRL6bp3nSNYRi9OG0sIq9GbLNYFCXnlKmxdH8g00-VahP0H_LOrzpQucjBUUkaGdkSin9XPbQT-zQ5Vnhnt6YbHwfl3PIgqtAGL_Cwghe3TV0AG5Y0F5mWROK8R393r6WRXh8hK4l-di3bTdfqD4uYU9N_r6yATwZqxhE3yS9JjB4Xo2-efdAcxVZ4mfU_1c0-tEULjmMjhrmFDctSENYhIJmg"/></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<div class="px-margin pt-space-md pb-space-xs flex flex-col gap-space-sm">
+<div class="flex items-center justify-between gap-space-sm">
+<button aria-label="Kembali ke Dashboard Utama" class="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors shadow-sm active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<button class="h-10 px-space-md bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md rounded-full flex items-center gap-space-xs shadow-md transition-all active:scale-95" id="btn-create-promo" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Buat Promo Baru</span>
+</button>
+</div>
+<div class="flex flex-col mt-space-xs">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight">Manajemen Promosi Mitra</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Atur penawaran promo kedai yang tayang di aplikasi customer</p>
+</div>
+</div>
+<div class="w-full overflow-x-auto no-scrollbar px-margin py-space-sm">
+<div class="flex items-center gap-space-xs min-w-max">
+<button class="tab-pill px-space-md py-2 rounded-full font-label-md text-label-md bg-primary text-on-primary shadow-sm flex items-center gap-1.5 transition-colors" data-tab="active" type="button">
+<span>Sedang Tayang</span>
+<span class="px-1.5 py-0.2 bg-on-primary/20 text-on-primary rounded-full font-label-sm text-label-sm">6</span>
+</button>
+<button class="tab-pill px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors flex items-center gap-1.5" data-tab="review" type="button">
+<span>Menunggu Review</span>
+<span class="px-1.5 py-0.2 bg-secondary-fixed text-on-secondary-fixed font-bold rounded-full font-label-sm text-label-sm">2</span>
+</button>
+<button class="tab-pill px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors flex items-center gap-1.5" data-tab="scheduled" type="button">
+<span>Terjadwal</span>
+<span class="px-1.5 py-0.2 bg-surface-container-highest text-on-surface-variant rounded-full font-label-sm text-label-sm">3</span>
+</button>
+<button class="tab-pill px-space-md py-2 rounded-full font-label-md text-label-md bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors flex items-center gap-1.5" data-tab="ended" type="button">
+<span>Berakhir</span>
+<span class="px-1.5 py-0.2 bg-surface-container-highest text-on-surface-variant rounded-full font-label-sm text-label-sm">14</span>
+</button>
+</div>
+</div>
+<div class="px-margin pt-space-xs pb-space-lg flex flex-col gap-space-md">
+<!-- Kartu 1: Sedang Tayang -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative overflow-hidden">
+<div class="relative w-full h-40 rounded-lg overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Aesthetic afternoon coffee and toasted bread with kaya spread arranged on a rustic wooden table in a leafy tropical cafe terrace in Tebet Jakarta, soft warm sunlight casting gentle shadows, editorial cafe photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa7Xk2b_Y5LUy91Fth3J5advyahuJCIWDHIO1wO-3dT4A4obqSDO1EiRHlrI9VpDCKWkkuwy_6xVttIRDV7oytzXUdroC9cyBZwLsdrI711hVKrfhjpPLFTDri1shGB06GB7obCmx-6f9ivvhgNj-OvDW5pmxTy1eCO-tt9e_fg4S-HmB96EF8oKt2EpSJ7mTw04tBq7tXDsygW-Sa8CEdXZmleBH7pfKOcOw2KKKv-_xDe41xPjs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/70 via-transparent to-transparent"></div>
+<div class="absolute top-space-sm left-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-bold shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed animate-pulse"></span>
+            Aktif / Tayang di Explore
+          </span>
+</div>
+<div class="absolute bottom-space-sm left-space-sm right-space-sm flex items-center justify-between text-on-primary">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed">storefront</span>
+<span class="font-label-md text-label-md font-semibold truncate">Selasar Kopi &amp; Ruang Diskusi</span>
+</div>
+<span class="font-label-sm text-label-sm bg-on-surface/40 backdrop-blur-md px-2 py-0.5 rounded-full">Tebet</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Diskon 30% Paket Kopi + Toast Sore</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Potongan 30% khusus pembelian jam 15.00 - 18.00 WIB untuk menu paket hemat nongkrong sore santai.</p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-primary">calendar_today</span>
+<span class="font-label-sm text-label-sm">20 Okt 2024 - 31 Okt 2024</span>
+</div>
+<div class="flex items-center gap-1 text-on-secondary-container bg-secondary-container/30 px-2 py-0.5 rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>15.00 - 18.00</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-xs pt-space-xs">
+<button class="h-9 px-space-xs rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Edit Info</span>
+</button>
+<button class="h-9 px-space-xs rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Pratinjau</span>
+</button>
+<button class="h-9 px-space-xs rounded-lg bg-error-container/70 hover:bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">pause_circle</span>
+<span>Hentikan</span>
+</button>
+</div>
+</article>
+<!-- Kartu 2: Menunggu Review -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex flex-col min-w-0">
+<div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-fixed font-label-sm text-label-sm font-bold w-max">
+<span class="material-symbols-outlined text-[14px]">hourglass_top</span>
+            Menunggu Persetujuan Operator
+          </div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-space-xs">Buy 2 Get 1 Kopi Susu Pelajar</h3>
+<div class="flex items-center gap-1 text-on-surface-variant mt-0.5">
+<span class="material-symbols-outlined text-[16px] text-primary">storefront</span>
+<span class="font-label-md text-label-md">Kopi Kenangan Senja</span>
+</div>
+</div>
+<div class="w-16 h-16 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up three iced coffee drinks in clear plastic takeaway cups with condensation droplets sitting on a coffee bar counter with student notebooks and pens blurred in background warm cozy ambience" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgyf9mmsqkC7uDpahJgwh88aOQNBDDfNzL4HC_90OUtp_ERl6iie19lmPKHvVkVucQ87YqD9diAEfS40xoG9939EgA9bBlF4g2bqnHBmf6ICEaZZUp7DRHuMTeKnV_4Wg7WRZr4qVdOKqWq3ll2SsN9RdqV_nWlL-bme2qO-LhIf8VFxjW-2WMmGnLvk1OKWQpATBm_Y6jxRgKsIF2FjSPVK5k0HiJUZlo7wtCtMewxcR2MBPvtwk"/>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Khusus pemesanan dine-in wajib menunjukkan kartu pelajar atau kartu tanda mahasiswa yang masih berlaku saat bertransaksi di kasir.</p>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm bg-surface-container-low px-space-sm py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-secondary">date_range</span>
+<span>Masa Berlaku: 1 Nov - 15 Nov 2024</span>
+</div>
+<!-- Catatan Operator Card -->
+<div class="bg-secondary-fixed/40 rounded-lg p-space-sm flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">info</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm font-bold text-on-secondary-fixed">Catatan Kurasi Operator:</span>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant leading-tight">Butuh validasi S&amp;K promo dengan pihak kasir kedai terkait batas maksimal per kartu per hari.</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+<button class="h-10 px-space-md rounded-full bg-surface-container hover:bg-surface-container-high text-error font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Tolak / Koreksi</span>
+</button>
+<button class="h-10 px-space-md rounded-full bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 shadow-md transition-all active:scale-95" type="button">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>Setujui Promo</span>
+</button>
+</div>
+</article>
+<!-- Kartu 3: Selesai / Nonaktif -->
+<article class="bg-surface-container-low/70 rounded-xl p-space-md flex flex-col gap-space-sm opacity-90">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex flex-col min-w-0">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm font-semibold w-max">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+            Selesai / Nonaktif
+          </span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface-variant mt-space-xs line-through decoration-outline">Free French Fries Transaksi Pertama</h3>
+<div class="flex items-center gap-1 text-on-surface-variant mt-0.5">
+<span class="material-symbols-outlined text-[16px]">storefront</span>
+<span class="font-label-md text-label-md">Dapur Rooftop Senja</span>
+</div>
+</div>
+<div class="w-14 h-14 rounded-lg overflow-hidden bg-surface-container-highest shrink-0 grayscale">
+<img class="w-full h-full object-cover" data-alt="A serving of golden crispy french fries seasoned with herbs inside a modern metal wire basket on a rooftop cafe setting in the evening" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgqF2N4d-0-GbLpthOqDXBEwNxNDU8AtzneU8o2fIOoJmWyA29FjSyTYLZWeLjg1CaeHULbI4bV_gRbLS_XDmnCrPrL0-kC8ALRFjPmWQuEHU8IX7jQgKzjFm_phfpabZ1_I7jZyCGxUvXoeVSBqZTq5lAMZncpauqB4ykle0IGxHDciwVUjinYUFejRdKZi8VUr91zJY2BL5_kRSZJxNjDWF-f5pJhpr9vjAH_3sn5qEDya5ZXY8"/>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm pt-space-xs">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">history</span>
+          Periode berakhir kemarin (23 Okt 2024)
+        </span>
+<span class="font-label-sm text-label-sm text-outline">Total Klaim: 142</span>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="h-9 px-space-md rounded-lg hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-error">delete_outline</span>
+<span>Hapus</span>
+</button>
+<button class="h-9 px-space-md rounded-lg bg-surface-container-lowest hover:bg-surface-container text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1 shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>Duplikasi Promo</span>
+</button>
+</div>
+</article>
+<!-- Quick Operator Banner Tip -->
+<div class="mt-space-xs p-space-md rounded-xl bg-surface-container-low flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[20px]">campaign</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h4 class="font-label-lg text-label-lg font-bold text-on-surface leading-tight">Standar Visual Banner Promo</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-normal mt-0.5">Pastikan banner mitra memiliki resolusi minimal 1080x600 px tanpa teks harga bertumpuk agar nyaman dibaca anak tongkrongan.</p>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    // Sinkronkan status aktif tab konten pada App Shell Bottom Nav
+    const navItems = document.querySelectorAll('nav a');
+    navItems.forEach(item => {
+      const path = item.getAttribute('data-path');
+      if (path === 'konten') {
+        item.classList.add('text-primary', 'font-bold');
+        item.classList.remove('text-on-surface-variant');
+      } else {
+        item.classList.remove('text-primary', 'font-bold');
+        item.classList.add('text-on-surface-variant');
+      }
+    });
+
+    // Interaktivitas Tab Filter Kategori
+    const tabs = document.querySelectorAll('.tab-pill');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+          t.classList.add('bg-surface-container', 'text-on-surface-variant');
+          const badge = t.querySelector('span:last-child');
+          if (badge && !badge.classList.contains('bg-secondary-fixed')) {
+            badge.classList.remove('bg-on-primary/20', 'text-on-primary');
+            badge.classList.add('bg-surface-container-highest', 'text-on-surface-variant');
+          }
+        });
+        tab.classList.remove('bg-surface-container', 'text-on-surface-variant');
+        tab.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+        const badge = tab.querySelector('span:last-child');
+        if (badge && !badge.classList.contains('bg-secondary-fixed')) {
+          badge.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+          badge.classList.add('bg-on-primary/20', 'text-on-primary');
+        }
+      });
+    });
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_24px_0_rgba(30,30,36,0.05)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 text-on-surface-variant transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-label-sm mt-0.5">Dashboard</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 text-on-surface-variant transition-colors" data-path="kedai" href="#"><span class="material-symbols-outlined text-[22px]">store</span><span class="font-label-sm text-label-sm mt-0.5">Kedai</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 text-on-surface-variant transition-colors" data-path="produk" href="#"><span class="material-symbols-outlined text-[22px]">local_cafe</span><span class="font-label-sm text-label-sm mt-0.5">Produk</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 transition-colors text-primary font-bold" data-path="konten" href="#"><span class="material-symbols-outlined text-[22px]">perm_media</span><span class="font-label-sm text-label-sm mt-0.5">Konten</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] w-full py-1 text-on-surface-variant transition-colors" data-path="profil" href="#"><span class="material-symbols-outlined text-[22px]">admin_panel_settings</span><span class="font-label-sm text-label-sm mt-0.5">Profil</span></a></div></nav></body></html>

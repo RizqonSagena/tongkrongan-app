@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><title>Detail Kedai - Tongkrongan Admin</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-error-container": "#93000a",
+        "surface-variant": "#e4e1ea",
+        "on-tertiary-fixed-variant": "#005143",
+        "on-tertiary": "#ffffff",
+        "on-secondary": "#ffffff",
+        "on-tertiary-container": "#f4fffa",
+        "on-secondary-fixed-variant": "#673d00",
+        "on-secondary-fixed": "#2b1700",
+        "inverse-primary": "#ffb599",
+        "on-primary-container": "#fffbff",
+        "on-primary": "#ffffff",
+        "error-container": "#ffdad6",
+        "surface-bright": "#fbf8ff",
+        "on-secondary-container": "#724400",
+        "surface-dim": "#dbd9e1",
+        "primary-container": "#ca4b07",
+        "primary": "#a33900",
+        "surface": "#fbf8ff",
+        "secondary": "#875200",
+        "on-tertiary-fixed": "#002019",
+        "secondary-fixed-dim": "#ffb866",
+        "on-primary-fixed-variant": "#7f2b00",
+        "surface-container-low": "#f5f2fb",
+        "surface-tint": "#a73a00",
+        "surface-container-highest": "#e4e1ea",
+        "secondary-fixed": "#ffddba",
+        "surface-container-high": "#eae7ef",
+        "on-surface": "#1b1b21",
+        "background": "#fbf8ff",
+        "inverse-on-surface": "#f2eff8",
+        "tertiary-fixed": "#9df3db",
+        "on-background": "#1b1b21",
+        "secondary-container": "#fdb257",
+        "on-primary-fixed": "#370e00",
+        "tertiary-container": "#28826f",
+        "surface-container-lowest": "#ffffff",
+        "primary-fixed-dim": "#ffb599",
+        "on-surface-variant": "#594139",
+        "outline": "#8d7167",
+        "inverse-surface": "#303036",
+        "primary-fixed": "#ffdbce",
+        "on-error": "#ffffff",
+        "tertiary-fixed-dim": "#81d6c0",
+        "error": "#ba1a1a",
+        "surface-container": "#efecf5",
+        "tertiary": "#006857",
+        "outline-variant": "#e1bfb4"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "space-xl": "2rem",
+        "margin": "1.25rem",
+        "space-xs": "0.25rem",
+        "gutter": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem"
+      },
+      "fontFamily": {
+        "headline-sm": ["Plus Jakarta Sans"],
+        "body-lg": ["Plus Jakarta Sans"],
+        "display": ["Plus Jakarta Sans"],
+        "label-md": ["Plus Jakarta Sans"],
+        "headline-lg": ["Plus Jakarta Sans"],
+        "headline-lg-mobile": ["Plus Jakarta Sans"],
+        "headline-md": ["Plus Jakarta Sans"],
+        "body-md": ["Plus Jakarta Sans"],
+        "body-sm": ["Plus Jakarta Sans"],
+        "label-lg": ["Plus Jakarta Sans"],
+        "label-sm": ["Plus Jakarta Sans"]
+      },
+      "fontSize": {
+        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "display": ["36px", {"lineHeight": "44px", "fontWeight": "800"}],
+        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.4px", "fontWeight": "700"}]
+      }
+    }
+  }
+}</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0 flex-1"><button aria-label="Kembali" class="w-11 h-11 min-h-[44px] min-w-[44px] -ml-2 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors shrink-0" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="Brand logo. - Primary color: #e05a1b
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-7 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1X-AcKcVO5RpkHoA8BOoBC0hkcjmiCmMkSZ9lS20EKRDHnpeKrvHqgcM0doCN2W2plWgOXYK18miIfKgDct4wBwQXarGvJiiK3Id_LID1Z0MUUZlwjfu6QxJibgGT8a5LK0PsY-uHgS4sxJS9taC1HntDhDPF1oj4krl466Fi__1GkIap0_8vVNkfkJp28HPX7dRoNnWrcriDxbRtb_Yh_mx77NbGFppJWhaeu5lTaIwfA-JMMRkg3N"/><div class="flex flex-col min-w-0 pl-space-xs"><span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">ADMIN PLATFORM</span><h1 class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">Detail Kedai</h1></div></div><div class="flex items-center shrink-0"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-fixed" src="https://lh3.googleusercontent.com/aida/AEtjO1VStkUmA7SxeH2jgzJlJU87MNWZRdbIpRL6bp3nSNYRi9OG0sIq9GbLNYFCXnlKmxdH8g00-VahP0H_LOrzpQucjBUUkaGdkSin9XPbQT-zQ5Vnhnt6YbHwfl3PIgqtAGL_Cwghe3TV0AG5Y0F5mWROK8R393r6WRXh8hK4l-di3bTdfqD4uYU9N_r6yATwZqxhE3yS9JjB4Xo2-efdAcxVZ4mfU_1c0-tEULjmMjhrmFDctSENYhIJmg"/></div></div></header><main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full pb-24">
+<!-- Top Bar Context (Secondary Action Strip inside Main) -->
+<div class="px-margin py-space-sm flex items-center justify-between bg-surface-container-lowest/90 backdrop-blur-md sticky top-16 z-30 shadow-sm">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-fixed/30 text-on-tertiary-fixed-variant font-label-sm text-label-sm font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+        Mitra Aktif Terverifikasi
+      </span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Menu Cepat Listing" class="w-9 h-9 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Hero Banner & Overview Visual -->
+<div class="relative w-full px-margin pt-space-sm">
+<div class="relative w-full h-56 rounded-xl overflow-hidden shadow-md bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Vibrant modern Indonesian coffee shop in Tebet Jakarta with sunlit warm wooden communal tables, lush indoor tropical plants, exposed brick texture, young professionals nongkrong chatting and working on laptops, barista bar in the background illuminated by warm amber tungsten pendant lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsWUemFiGPKO3gKw5W7S3aMb1f_FthbHU_QXMMBm5onsvcwcpo40GaoCWXrGi5MIS70Sg_5URgT6IH7pSfSCF8KjO1NDxs4TqnuY7-_1rJLELzfLTBIJ5lZ7Q6foO74xwX9aElBnGgXJPheur-nSPpnncgfwkXMmmJ_mNnkVS7C5s5XnPZwACm6fNIs-vtLtRJ-XQ0KN7hgbwtdaeLA7Z9b4TB21o4lxSUC1RNx7mywnCvmrvR9AA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<!-- Badges on Image -->
+<div class="absolute top-space-sm left-space-sm flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">storefront</span> ID: TNG-8492
+        </span>
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-on-surface font-label-sm text-label-sm font-semibold">
+          Kategori: Coffee Shop &amp; Coworking
+        </span>
+</div>
+<div class="absolute bottom-space-sm left-space-sm right-space-sm text-white">
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-fixed mb-0.5">Ruang Publik &amp; Nongkrong</p>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-white leading-snug drop-shadow-sm">
+          Selasar Kopi &amp; Ruang Diskusi
+        </h2>
+</div>
+</div>
+</div>
+<!-- Main Information Block -->
+<div class="px-margin mt-space-md flex flex-col gap-space-sm">
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Alamat Lengkap</span>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-relaxed">
+            Jl. Tebet Timur Dalam No. 42, Tebet, Jakarta Selatan
+          </p>
+<div class="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-tertiary">near_me</span>
+<span>-6.2341, 106.8529 • <strong class="text-on-surface font-semibold">Dekat Stasiun Tebet (250m)</strong></span>
+</div>
+</div>
+</div>
+<div class="h-[1px] w-full bg-surface-container"></div>
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Jam Operasional Listing</span>
+<p class="font-body-md text-body-md text-on-surface font-semibold">
+            Buka Setiap Hari • 09.00 - 23.00 WIB
+          </p>
+<p class="font-body-sm text-body-sm text-tertiary flex items-center gap-1 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+            Sedang beroperasi melayani pelanggan
+          </p>
+</div>
+</div>
+<div class="mt-1 pt-space-xs">
+<div class="w-full h-32 bg-cover bg-center rounded-lg shadow-inner relative flex items-end p-space-xs" data-location="Tebet Timur Dalam No 42, Jakarta Selatan" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAcksrpSw71GT8EeOssv9Z9t4sHJkBjPG5AR4mjrLdSLaTvL3g7OygPmpi2bn5dGGKChUDxquDnUytfV4s7MEtPCvWYpgXKTgFNqWxk0Yjg6hfxOMWponEwuvSO5yRgHnDB1T0TrgKtDdU5UuABzyGilKX6wG37VsRTyBMqtdwnMxPdXgKKlf3MsqF06e9htqR6TeIZbFILjpWhFSREtQN3mC2kZYvF_f8byrUsQGeMrGpOgSLVLyo')">
+<div class="px-2 py-1 rounded bg-surface-container-lowest/90 backdrop-blur-md text-on-surface font-label-sm text-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-primary">map</span>
+            Tap untuk navigasi titik Google Maps
+          </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Owner & Tenant Information (Koordinasi Operasional) -->
+<div class="px-margin mt-space-md">
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">badge</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Kontak PIC / Tenant</h3>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">Owner Resmi</span>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center font-headline-sm text-headline-sm text-primary font-bold">
+          DP
+        </div>
+<div class="flex flex-col min-w-0 flex-1">
+<h4 class="font-label-lg text-label-lg font-bold text-on-surface truncate">Dimas Prasetyo</h4>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">dimas.prasetyo@gmail.com</span>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">Terdaftar sejak 12 Januari 2024</span>
+</div>
+</div>
+<div class="flex gap-space-sm mt-1">
+<a class="flex-1 h-11 bg-tertiary-container hover:bg-tertiary text-on-tertiary-container hover:text-on-tertiary font-label-md text-label-md rounded-full flex items-center justify-center gap-2 transition-colors px-3 font-semibold shadow-sm" href="https://wa.me/6281289764321" target="_blank">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+          Chat WA (0812-8976-4321)
+        </a>
+<button class="w-11 h-11 rounded-full bg-surface-container text-on-surface flex items-center justify-center hover:bg-surface-container-high transition-colors" title="Salin Kontak" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Media Gallery & Assets -->
+<div class="px-margin mt-space-md flex flex-col gap-space-xs">
+<div class="flex items-center justify-between mb-1">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Galeri Media Listing</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">6 Foto Suasana Aktif • 1 Video Reels Profil</p>
+</div>
+<div class="flex gap-1.5">
+<button class="px-2.5 py-1.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-semibold flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">add_a_photo</span>
+          + Foto
+        </button>
+<button class="px-2.5 py-1.5 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">videocam</span>
+          + Video
+        </button>
+</div>
+</div>
+<!-- Media Horizontal Scroll Strip -->
+<div class="flex gap-space-sm overflow-x-auto pb-2 -mx-margin px-margin no-scrollbar">
+<!-- Video Item -->
+<div class="relative w-32 h-44 rounded-xl overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Vertical mobile short video thumbnail of a barista pouring warm oat milk into a ceramic latte cup at Selasar Kopi Jakarta, cinematic shallow depth of field, warm morning light, cinematic vlog style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMnYnlZTzMmyiLcLWPRymbF9zXdVs6yXiLYOWCezHPxV8uPr3oKHufvyup9NFGg-KHq8QGTlyP0I7Hyxctj6Ymk7HjRVmbapKxaXalguzW7RazbnCff74JSQ1uzSxgSpGjL225nL27obKpPAGJ8fESxLyDgXwC447JUpUvV3-uA_Vjxa7JsK1I8TK5lNpBg1fLTKyzhOHHl3MTIePcxFfPZE1yH76LcXtwAP1xpkB_DbpeAKv5jiQ"/>
+<div class="absolute inset-0 bg-black/30 flex flex-col justify-between p-2">
+<span class="self-start px-1.5 py-0.5 rounded bg-primary text-white font-label-sm text-[10px] uppercase font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">play_circle</span> 0:28s
+          </span>
+<span class="font-label-sm text-label-sm text-white font-medium drop-shadow truncate">Reels Profil</span>
+</div>
+</div>
+<!-- Photo 1: Indoor AC -->
+<div class="relative w-32 h-44 rounded-xl overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Indoor air-conditioned seating area at coffee shop with minimalist Scandinavian wooden furniture, cozy ergonomic chairs, wall plugs with warm lighting and comfortable working desks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5-SUrBtiCKXV4EO6VnkpYoBKTyvfBmCkWQ-gBL4l3EBpmRfru1uAbaBEg6PLUULhwiMNgy3APQNkPWijD45qYB1sJp4dPxxTNRVpDKn9de8ilu2hYtcN3_08atjQ4aSeEFV_Jp0UAtpFRBzeSY3oO02KRp3N8viJiDmnQtrGpedz-Jq-Yzbis-jrGqioI84DuWEYnUB75VG0oAFVFHIKCM6JqNGTCzJaCMhTeCfi2HQqVCwsg4eo"/>
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+<span class="font-label-sm text-label-sm text-white font-medium drop-shadow">Indoor AC</span>
+</div>
+</div>
+<!-- Photo 2: Rooftop Bar -->
+<div class="relative w-32 h-44 rounded-xl overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Open air rooftop seating patio during golden hour in Tebet Jakarta, fairy string lights glowing overhead, bean bags, warm orange sunset sky background with city skyline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHmEgcOGftjwiUBw2-a_O5iaMRaYrizK-yd-zz4luGtz0iQqs3lFTdeuXRn0872dbmjhySgfzpHEa79TmH2HYfrSOgP2_-EcikpCAAuUl1pWcl7dlKKprHO2w9aDMPxMm4148_LgGXaq0oM0sZETIpUGF86SLUroYSJF0Mj54Bg5Ule2rBynhre_NdAIPSZPdGrCXbOY7rM0HE2m11R3KLmq7dUFpKIWyX0Bj7ePdGA-iNmIR3x5c"/>
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+<span class="font-label-sm text-label-sm text-white font-medium drop-shadow">Rooftop Bar</span>
+</div>
+</div>
+<!-- Photo 3: Barista Bar -->
+<div class="relative w-32 h-44 rounded-xl overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Specialty espresso machine station with terrazzo stone counter, coffee beans grinder, clean minimalist mugs on shelf, barista in linen apron brewing coffee." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHJlxvCABeJHpi7mknukyd3LgUARV68KU4fYomQD_MrgtSHBMYhxxyeIvAisTCSfbf2CiVNlMF6WmEDjvKyLEbtyRF6_RBaIkF3kK7vw4zNWnaeGT_y8XfJajkXrgKPXCP4IBDaR36u0-rk6vMOYB-urVqkfwM1HaBOTi3Bzvww-a846A2Gr9lz10IdRyabPJqfiZVU6IbNAqp_CubxrvB6yOAEtWSpHt8m0kS6dmmhBQ599cSZ50"/>
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+<span class="font-label-sm text-label-sm text-white font-medium drop-shadow">Barista Bar</span>
+</div>
+</div>
+<!-- Photo 4: Communal Table -->
+<div class="relative w-32 h-44 rounded-xl overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Long solid teak wood communal table with several power outlets in center, iced coffee cups and laptops spread out in a modern cafe space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5JPFZhvuX7ApNlzmhOiGtUB7xcmvVMbmraya6-RUDXNBHxQPmtN0hJolVhwtlalskvwQPyVA7iYL3cV4xOy0kxvJOd2GlFDvQrArGj2EiHNRYwjOFTi2hZ7S_2ExFDTFhY6Jtwsl4qCoY7Gf7pISpnnaRcJh8U0yyQfw12G1hsKBOy0i4XhRHkLRJh0vCFew1M1E2KvLBzwUirO_o0U4z2upM-iYuyPY9D-XCB7guBjcMOZ27E3E"/>
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+<span class="font-label-sm text-label-sm text-white font-medium drop-shadow">Meja Komunal</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Operational Menu Summary (No Finance, strictly operational catalog status) -->
+<div class="px-margin mt-space-md">
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Katalog Menu Listing</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Status ketersediaan menu di aplikasi publik</p>
+</div>
+<div class="px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-md text-label-md font-bold">
+          30 Menu Terdata
+        </div>
+</div>
+<!-- Status Split Bar -->
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-1.5 flex-1">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">28 Tersedia</span>
+</div>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-1.5 flex-1">
+<span class="w-2.5 h-2.5 rounded-full bg-error"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">2 Nonaktif / Habis</span>
+</div>
+</div>
+<!-- Top Operational Items Preview -->
+<div class="flex flex-col gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-outline uppercase font-semibold">Item Favorit Pengunjung</span>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-lowest shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[18px]">coffee</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">Es Kopi Selasar Aren</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Signature Beverage</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-tertiary-fixed-variant font-label-sm text-label-sm font-semibold shrink-0">Aktif</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-lowest shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">Nasi Kulit Sambal Matah</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Rice Bowl &amp; Makanan Berat</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed/40 text-on-tertiary-fixed-variant font-label-sm text-label-sm font-semibold shrink-0">Aktif</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-lowest shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface shrink-0">
+<span class="material-symbols-outlined text-[18px]">local_cafe</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">Manual Brew V60 (Beans Gayo)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Filter Coffee Single Origin</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold shrink-0">Habis</span>
+</div>
+</div>
+<button class="w-full mt-2 h-11 rounded-full bg-surface-container text-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1.5 hover:bg-surface-container-high transition-colors" type="button">
+<span>Kelola Katalog Produk Kedai Ini</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Operational Admin Actions Grid -->
+<div class="px-margin mt-space-md flex flex-col gap-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface px-1">Tindakan Pengelola Listing</h3>
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-colors flex flex-col items-start text-left gap-1.5" type="button">
+<div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</div>
+<span class="font-label-lg text-label-lg font-bold text-on-surface leading-tight">Edit Informasi Kedai</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Update nama, fasilitas, titik GPS</span>
+</button>
+<button class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-colors flex flex-col items-start text-left gap-1.5" type="button">
+<div class="w-9 h-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">cloud_upload</span>
+</div>
+<span class="font-label-lg text-label-lg font-bold text-on-surface leading-tight">Unggah Foto &amp; Video</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Tambah materi promosi baru</span>
+</button>
+<button class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-colors flex flex-col items-start text-left gap-1.5" type="button">
+<div class="w-9 h-9 rounded-full bg-tertiary/10 text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</div>
+<span class="font-label-lg text-label-lg font-bold text-on-surface leading-tight">Pratinjau Halaman</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Cek tampilan sisi customer</span>
+</button>
+<button class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm hover:bg-error-container/30 transition-colors flex flex-col items-start text-left gap-1.5" type="button">
+<div class="w-9 h-9 rounded-full bg-error/10 text-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">pause_circle</span>
+</div>
+<span class="font-label-lg text-label-lg font-bold text-error leading-tight">Suspend / Nonaktif</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sembunyikan dari eksplorasi</span>
+</button>
+</div>
+</div>
+<!-- Bottom Navigation Bar (Kedai Tab Active) -->
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_-4px_24px_rgba(30,30,36,0.06)] pb-safe">
+<div class="h-16 px-space-md flex items-center justify-around max-w-lg mx-auto">
+<button class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="font-label-sm text-label-sm mt-0.5">Beranda</span>
+</button>
+<button class="flex flex-col items-center justify-center flex-1 py-1 text-primary" type="button">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">storefront</span>
+<span class="font-label-sm text-label-sm font-bold mt-0.5">Kedai</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary mt-0.5"></span>
+</button>
+<button class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">verified</span>
+<span class="font-label-sm text-label-sm mt-0.5">Verifikasi</span>
+</button>
+<button class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">campaign</span>
+<span class="font-label-sm text-label-sm mt-0.5">Promosi</span>
+</button>
+<button class="flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">manage_accounts</span>
+<span class="font-label-sm text-label-sm mt-0.5">Akun</span>
+</button>
+</div>
+</nav>
+</div></main></body></html>

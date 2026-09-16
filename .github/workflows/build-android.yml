@@ -1,0 +1,137 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: gradle
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Get dependencies
+        working-directory: ./tongkrongan_app
+        run: flutter pub get
+
+      - name: Run analysis
+        working-directory: ./tongkrongan_app
+        run: flutter analyze
+        continue-on-error: true
+
+      - name: Decode Android signing key
+        working-directory: ./tongkrongan_app
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+
+      - name: Create Android keystore properties
+        working-directory: ./tongkrongan_app
+        run: |
+          echo "storeFile=upload-keystore.jks" > android/key.properties
+          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
+
+      - name: Build APK (Debug)
+        working-directory: ./tongkrongan_app
+        run: flutter build apk --debug -v
+        if: github.event_name == 'pull_request'
+
+      - name: Build APK (Release)
+        working-directory: ./tongkrongan_app
+        run: flutter build apk --release -v
+
+      - name: Build App Bundle (Release)
+        working-directory: ./tongkrongan_app
+        run: flutter build appbundle --release -v
+
+      - name: Generate version tag
+        id: version
+        run: |
+          VERSION=$(date +'%Y%m%d_%H%M%S')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "APK Version: $VERSION"
+
+      - name: Upload APK to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release-${{ steps.version.outputs.version }}.apk
+          path: tongkrongan_app/build/app/outputs/flutter-app/release/app-release.apk
+          retention-days: 30
+
+      - name: Upload App Bundle to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release-${{ steps.version.outputs.version }}.aab
+          path: tongkrongan_app/build/app/outputs/bundle/release/app-release.aab
+          retention-days: 30
+
+      - name: Create Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: android-${{ steps.version.outputs.version }}
+          release_name: Android Release ${{ steps.version.outputs.version }}
+          body: |
+            ## Android Build
+            - **Version:** ${{ steps.version.outputs.version }}
+            - **Branch:** main
+            - **Commit:** ${{ github.sha }}
+            
+            ### Download
+            - APK: [Download](../../releases/download/android-${{ steps.version.outputs.version }}/app-release-${{ steps.version.outputs.version }}.apk)
+            - AAB: [Download](../../releases/download/android-${{ steps.version.outputs.version }}/app-release-${{ steps.version.outputs.version }}.aab)
+          draft: false
+          prerelease: false
+
+      - name: Upload APK to Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: tongkrongan_app/build/app/outputs/flutter-app/release/app-release.apk
+          asset_name: app-release-${{ steps.version.outputs.version }}.apk
+          asset_content_type: application/vnd.android.package-archive
+
+      - name: Upload to Sideloadly (Optional)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          # Sideloadly CLI atau API call
+          # Dokumentasi: https://sideloadly.io/docs/api
+          curl -X POST https://api.sideloadly.io/upload \
+            -H "Authorization: Bearer ${{ secrets.SIDELOADLY_API_KEY }}" \
+            -F "file=@tongkrongan_app/build/app/outputs/flutter-app/release/app-release.apk" \
+            -F "device_id=${{ secrets.SIDELOADLY_DEVICE_ID }}" \
+            -F "auto_install=true"
+        continue-on-error: true
+
+      - name: Post Build Status
+        if: always()
+        run: |
+          echo "✅ Android APK Build Complete"
+          echo "Build artifacts available in Actions"

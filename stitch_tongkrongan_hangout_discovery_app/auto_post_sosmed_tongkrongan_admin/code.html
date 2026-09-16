@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><title>Moderasi Konten - Tongkrongan Admin</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-error-container": "#93000a",
+        "surface-variant": "#e4e1ea",
+        "on-tertiary-fixed-variant": "#005143",
+        "on-tertiary": "#ffffff",
+        "on-secondary": "#ffffff",
+        "on-tertiary-container": "#f4fffa",
+        "on-secondary-fixed-variant": "#673d00",
+        "on-secondary-fixed": "#2b1700",
+        "inverse-primary": "#ffb599",
+        "on-primary-container": "#fffbff",
+        "on-primary": "#ffffff",
+        "error-container": "#ffdad6",
+        "surface-bright": "#fbf8ff",
+        "on-secondary-container": "#724400",
+        "surface-dim": "#dbd9e1",
+        "primary-container": "#ca4b07",
+        "primary": "#a33900",
+        "surface": "#fbf8ff",
+        "secondary": "#875200",
+        "on-tertiary-fixed": "#002019",
+        "secondary-fixed-dim": "#ffb866",
+        "on-primary-fixed-variant": "#7f2b00",
+        "surface-container-low": "#f5f2fb",
+        "surface-tint": "#a73a00",
+        "surface-container-highest": "#e4e1ea",
+        "secondary-fixed": "#ffddba",
+        "surface-container-high": "#eae7ef",
+        "on-surface": "#1b1b21",
+        "background": "#fbf8ff",
+        "inverse-on-surface": "#f2eff8",
+        "tertiary-fixed": "#9df3db",
+        "on-background": "#1b1b21",
+        "secondary-container": "#fdb257",
+        "on-primary-fixed": "#370e00",
+        "tertiary-container": "#28826f",
+        "surface-container-lowest": "#ffffff",
+        "primary-fixed-dim": "#ffb599",
+        "on-surface-variant": "#594139",
+        "outline": "#8d7167",
+        "inverse-surface": "#303036",
+        "primary-fixed": "#ffdbce",
+        "on-error": "#ffffff",
+        "tertiary-fixed-dim": "#81d6c0",
+        "error": "#ba1a1a",
+        "surface-container": "#efecf5",
+        "tertiary": "#006857",
+        "outline-variant": "#e1bfb4"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "space-xl": "2rem",
+        "margin": "1.25rem",
+        "space-xs": "0.25rem",
+        "gutter": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem"
+      },
+      "fontFamily": {
+        "headline-sm": ["Plus Jakarta Sans"],
+        "body-lg": ["Plus Jakarta Sans"],
+        "display": ["Plus Jakarta Sans"],
+        "label-md": ["Plus Jakarta Sans"],
+        "headline-lg": ["Plus Jakarta Sans"],
+        "headline-lg-mobile": ["Plus Jakarta Sans"],
+        "headline-md": ["Plus Jakarta Sans"],
+        "body-md": ["Plus Jakarta Sans"],
+        "body-sm": ["Plus Jakarta Sans"],
+        "label-lg": ["Plus Jakarta Sans"],
+        "label-sm": ["Plus Jakarta Sans"]
+      },
+      "fontSize": {
+        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "display": ["36px", {"lineHeight": "44px", "fontWeight": "800"}],
+        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.4px", "fontWeight": "700"}]
+      }
+    }
+  }
+}</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0 flex-1"><button aria-label="Kembali" class="w-11 h-11 min-h-[44px] min-w-[44px] -ml-2 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors shrink-0" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="Brand logo. - Primary color: #e05a1b
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-7 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1X-AcKcVO5RpkHoA8BOoBC0hkcjmiCmMkSZ9lS20EKRDHnpeKrvHqgcM0doCN2W2plWgOXYK18miIfKgDct4wBwQXarGvJiiK3Id_LID1Z0MUUZlwjfu6QxJibgGT8a5LK0PsY-uHgS4sxJS9taC1HntDhDPF1oj4krl466Fi__1GkIap0_8vVNkfkJp28HPX7dRoNnWrcriDxbRtb_Yh_mx77NbGFppJWhaeu5lTaIwfA-JMMRkg3N"/><div class="flex flex-col min-w-0 pl-space-xs"><span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">ADMIN PLATFORM</span><h1 class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">Moderasi Konten</h1></div></div><div class="flex items-center shrink-0"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-fixed" src="https://lh3.googleusercontent.com/aida/AEtjO1VStkUmA7SxeH2jgzJlJU87MNWZRdbIpRL6bp3nSNYRi9OG0sIq9GbLNYFCXnlKmxdH8g00-VahP0H_LOrzpQucjBUUkaGdkSin9XPbQT-zQ5Vnhnt6YbHwfl3PIgqtAGL_Cwghe3TV0AG5Y0F5mWROK8R393r6WRXh8hK4l-di3bTdfqD4uYU9N_r6yATwZqxhE3yS9JjB4Xo2-efdAcxVZ4mfU_1c0-tEULjmMjhrmFDctSENYhIJmg"/></div></div></header><main class="flex flex-col relative w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full pb-28">
+<!-- Sub-Header & Main Action Bar -->
+<div class="px-margin pt-space-md pb-space-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-primary font-bold uppercase tracking-wider">Social Media Publisher</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-extrabold tracking-tight">Auto Post &amp; Konten Sosmed</h2>
+</div>
+<button class="shrink-0 flex items-center gap-1.5 px-space-md py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-md active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Buat Post</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Jadwalkan publikasi promosi kedai mitra ke multi-platform otomatis.</p>
+</div>
+<!-- Form / Quick Auto-Schedule Composer Box -->
+<div class="px-margin mt-space-sm">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_4px_20px_-2px_rgba(110,60,20,0.06),0_2px_6px_-1px_rgba(110,60,20,0.04)] flex flex-col gap-space-md">
+<!-- Kedai Selector Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs min-w-0">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">storefront</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mitra Kedai</span>
+<div class="flex items-center gap-1">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate font-bold">Selasar Kopi &amp; Ruang Diskusi</span>
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0">expand_more</span>
+</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+          Sinkron Aktif
+        </span>
+</div>
+<!-- Platform Selection Chips -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Platform Publikasi</label>
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-0.5">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">video_library</span>
+<span>Instagram Reels</span>
+<span class="material-symbols-outlined text-[14px]">check</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">play_shapes</span>
+<span>TikTok Kedai</span>
+<span class="material-symbols-outlined text-[14px]">check</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">public</span>
+<span>Facebook Page</span>
+</button>
+</div>
+</div>
+<!-- Media Visual & Dynamic Caption Preview -->
+<div class="grid grid-cols-3 gap-space-sm bg-surface-container-low p-space-sm rounded-lg items-start">
+<div class="relative w-full aspect-[4/5] rounded-md overflow-hidden bg-surface-container shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Close-up shot of an Indonesian iced brown sugar coffee cup or es kopi susu aren placed on a rustic wooden cafe table during sunset golden hour in South Jakarta with warm amber cinematic highlights and bokeh lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8vmuIXWPYLu4DD62FR6hbldoEjdta9xP7_dOmGV-iXcYXAIRrUN5fCgAXeDFR_qyAENTf0yw2cHXrHdF2KphN2qHzpWzstkwYWjcmmMA-BKT6r06RGc1cWDtzf8u85R12mpuhH6z1LUW1yZPc6TOlGGAXQ4VRCMhd635w_SvmF_v23VKmtKLnIk0JKYAttnQnovaFedkSGbwNNhJNiStfISqDJuplsVMtfcwELQbE_Sk0BIDrMys"/>
+<div class="absolute bottom-1 right-1 bg-on-surface/75 text-surface-container-lowest px-1.5 py-0.5 rounded text-[9px] font-label-sm flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[11px]">timer</span> 00:28
+          </div>
+</div>
+<div class="col-span-2 flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">short_text</span>
+            Caption Preview
+          </span>
+<p class="font-body-sm text-body-sm text-on-surface line-clamp-3 leading-snug">
+            Senja syahdu paling nikmat ditemani secangkir kopi susu aren hangat dan semilir angin rooftop... <span class="text-primary font-semibold">#Tongkrongan #NgopiJakarta</span>
+</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary font-bold">128 karakter</span>
+<button class="font-label-sm text-label-sm text-primary underline flex items-center gap-0.5" type="button">
+<span>Sesuaikan Platform</span>
+<span class="material-symbols-outlined text-[14px]">edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Schedule Time Banner & Quick Deploy -->
+<div class="flex items-center justify-between bg-surface-container px-space-md py-2.5 rounded-lg">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0">calendar_clock</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Jadwal Auto-Post</span>
+<span class="font-label-md text-label-md text-on-surface font-bold truncate">Jumat, 25 Okt 2024 • 17:00 WIB</span>
+</div>
+</div>
+<button class="px-space-md py-1.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm font-bold active:bg-primary-container active:text-on-primary transition-colors" type="button">
+          Atur Ulang
+        </button>
+</div>
+</div>
+</div>
+<!-- Section: Scheduled Posts Listing -->
+<div class="px-margin mt-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Daftar Posting Terjadwal</h3>
+<span class="w-5 h-5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm flex items-center justify-center font-bold">4</span>
+</div>
+<button class="text-primary font-label-md text-label-md flex items-center gap-0.5" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+        Filter
+      </button>
+</div>
+<!-- Status Tabs -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar pb-1">
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold shadow-sm shrink-0 flex items-center gap-1.5" type="button">
+<span>Terjadwal</span>
+<span class="px-1.5 py-0.2 rounded-full bg-on-primary text-primary font-label-sm text-label-sm">4</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md shrink-0" type="button">
+        Berhasil Tayang (18)
+      </button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md shrink-0" type="button">
+        Draft (2)
+      </button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md shrink-0" type="button">
+        Gagal (0)
+      </button>
+</div>
+<!-- Feed Item 1: Reels Rooftop -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_4px_20px_-2px_rgba(110,60,20,0.06)] flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm min-w-0">
+<div class="relative w-16 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Rooftop cafe aesthetic patio with young Indonesian creative friends laughing around communal wooden table under warm festoon lights and sunset dusk sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbI8oRNDC4ssavPemMbQFDVcGIEsspOXXpgEsbdlX_QmRh8F0oveoxpP6_LthIF-QsbW-yAhswfEZ9xM0ozBy__R7LyMH3mFNJwXwYvvsZjbKJCvebR23XaLU66vI0ZP3o_eU7x92usvkW6ba-cZdxoGUicTyoiZS-5ESbSEzmSgy5ka-KrdAXJwhsqyspTadxMi0NpRxGSlxdxWWvHjKXcYYAvjOEAyn8EOnxEzDub4_Zuy5amhY"/>
+<div class="absolute top-1 left-1 bg-on-surface/70 text-surface-container-lowest p-0.5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px]">videocam</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                Terjadwal Otomatis
+              </span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate">Reels: Suasana Senja Rooftop Selasar</h4>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Selasar Kopi &amp; Ruang Diskusi</span>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="flex items-center gap-1 text-[11px] font-label-sm text-primary font-bold">
+<span class="material-symbols-outlined text-[14px]">alarm</span>
+                Hari Ini, 17:00 WIB (Dalam 2 jam)
+              </span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs bg-surface-container-low px-2.5 py-2 rounded-lg">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Platform:</span>
+<div class="flex items-center gap-1">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-primary">camera_alt</span> Instagram
+            </span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-primary">movie</span> TikTok
+            </span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-3 gap-space-xs pt-1">
+<button class="py-2 px-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">edit_calendar</span>
+          Ubah Jadwal
+        </button>
+<button class="py-2 px-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+          Edit Caption
+        </button>
+<button class="py-2 px-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:opacity-80 transition-opacity" type="button">
+<span class="material-symbols-outlined text-[14px]">close</span>
+          Batalkan
+        </button>
+</div>
+</div>
+<!-- Feed Item 2: Feed Boardgame Night -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_4px_20px_-2px_rgba(110,60,20,0.06)] flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm min-w-0">
+<div class="relative w-16 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Top down flatlay photo of cozy modern coffee shop table with warm pour-over coffee carafe and vintage board games arranged neatly on dark wood grain table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfLIWGffVUvWnQiWCg0-DY3tx0IANQ8tBVBfytKn0Dv1fa8H6y7Sfp3g9AOGlzw0vZW0QXQIGVvk96Zh1Z0VgVyUN5ZXOt6zPKgvohsAKrtK1-Q3w5MiQ05FDjOGw5tC3NcUkpVhJsS021Vlb-KY0UBC2zflm9Q3JGYRlme1Nilqy0k1ZUG27c14mfxdx7sQmx0AW7HsDmGGvQ8ArOBnC2cBB3uzZ3UnMvAyijUAtfPbOMVHA4ucc"/>
+<div class="absolute top-1 left-1 bg-on-surface/70 text-surface-container-lowest p-0.5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px]">image</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span>
+                Terjadwal
+              </span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate">Feed: Pengumuman Boardgame Night</h4>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Rumah Kopi &amp; Kolaboratif</span>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="flex items-center gap-1 text-[11px] font-label-sm text-secondary font-bold">
+<span class="material-symbols-outlined text-[14px]">event</span>
+                Besok, 10:00 WIB
+              </span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs bg-surface-container-low px-2.5 py-2 rounded-lg">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Platform:</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-primary">photo_library</span> Instagram Feed
+          </span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="py-2 px-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">edit</span>
+          Edit Jadwal &amp; Konten
+        </button>
+<button class="py-2 px-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:opacity-80 transition-opacity" type="button">
+<span class="material-symbols-outlined text-[14px]">cancel</span>
+          Batalkan
+        </button>
+</div>
+</div>
+<!-- Feed Item 3: Berhasil Dipublikasikan (TikTok Tour) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_4px_20px_-2px_rgba(110,60,20,0.06)] flex flex-col gap-space-sm opacity-95">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm min-w-0">
+<div class="relative w-16 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="POV video smartphone perspective walking into a lively urban coffee shop showing electric wall sockets desks with laptops and cheerful university students working comfortably" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZdoW2-ulSuR62FQgjVtqftT-0eHVxR9erv8wByWa5vVsd5KpSGtU7LQ_MCh0yWfb53DF0qyt8ZY80Z9oso9jaGC5u8p84-MRIbWn87n_qtlQiXTrGn1HUDlaZZ-qxsXPU8fvgq9i_f_9WaHtulGHCIuiNxrXIbVs8Oh7RjTFLcXquYlIVmBxNm21oGW5L_sM6lYdKNGuymexASSex59Nu3l1nqYRQ_PElaUraG4kh__HfjfHGzFg"/>
+<div class="absolute bottom-1 right-1 bg-tertiary text-on-tertiary p-0.5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[11px]">done_all</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-tertiary">check_circle</span>
+                Berhasil Dipublikasikan
+              </span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold truncate">Video TikTok: Tour Spot Colokan &amp; WiFi Kencang</h4>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Selasar Kopi &amp; Ruang Diskusi</span>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="text-[11px] font-label-sm text-on-surface-variant">
+                Diposting Kemarin, 19:30 WIB
+              </span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs bg-surface-container-low px-2.5 py-2 rounded-lg">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Platform:</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-primary">play_circle</span> TikTok Kedai
+          </span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+          1,480 tayangan
+        </span>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="py-2 px-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          Lihat Postingan
+        </button>
+<button class="py-2 px-1 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 active:bg-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">repeat</span>
+          Posting Ulang
+        </button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar: Floating Dock Style -->
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-md pb-safe shadow-[0_-4px_24px_0_rgba(30,30,36,0.06)]">
+<div class="flex items-center justify-around h-16 max-w-lg mx-auto px-margin">
+<!-- Item 1: Kedai -->
+<a class="flex flex-col items-center justify-center gap-0.5 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">store</span>
+<span class="font-label-sm text-label-sm font-medium">Kedai</span>
+</a>
+<!-- Item 2: Menu & Promo -->
+<a class="flex flex-col items-center justify-center gap-0.5 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">local_cafe</span>
+<span class="font-label-sm text-label-sm font-medium">Menu</span>
+</a>
+<!-- Item 3: Konten (ACTIVE TAB) -->
+<a class="flex flex-col items-center justify-center gap-0.5 text-primary font-bold relative" href="#">
+<div class="relative">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">post_add</span>
+<span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-primary ring-2 ring-surface-container-lowest"></span>
+</div>
+<span class="font-label-sm text-label-sm font-bold">Konten</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary mt-0.5"></span>
+</a>
+<!-- Item 4: Komunitas -->
+<a class="flex flex-col items-center justify-center gap-0.5 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">groups</span>
+<span class="font-label-sm text-label-sm font-medium">Komunitas</span>
+</a>
+<!-- Item 5: Akun -->
+<a class="flex flex-col items-center justify-center gap-0.5 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">manage_accounts</span>
+<span class="font-label-sm text-label-sm font-medium">Profil</span>
+</a>
+</div>
+</nav>
+</div></main></body></html>

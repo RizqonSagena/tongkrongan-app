@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import '../../../../core/themes/app_theme.dart';
+import '../../../../core/models/chat_model.dart';
+import '../../../../core/data/mock_chats.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -12,84 +14,58 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   String _selectedChat = '';
   final TextEditingController _messageController = TextEditingController();
-  bool _showConversationList = true;
 
-  final List<Map<String, dynamic>> conversations = [
-    {
-      'id': '1',
-      'name': 'Komunitas Kopi Tebet',
-      'lastMessage': 'Siapa aja yang ikut meetup minggu depan?',
-      'time': '15 menit lalu',
-      'unread': 3,
-      'avatar': '☕',
-      'isGroup': true,
-    },
-    {
-      'id': '2',
-      'name': 'Budi Santoso',
-      'lastMessage': 'Oke, sampai jumpa di Selasar Kopi',
-      'time': '1 jam lalu',
-      'unread': 0,
-      'avatar': '👤',
-      'isGroup': false,
-    },
-    {
-      'id': '3',
-      'name': 'Kelompok Nongkrong Lembang',
-      'lastMessage': 'Foto-foto kemarin udah upload belom?',
-      'time': '3 jam lalu',
-      'unread': 0,
-      'avatar': '📷',
-      'isGroup': true,
-    },
-  ];
-
-  final List<Map<String, dynamic>> messages = [
-    {
-      'type': 'bot',
-      'content': 'Halo! 👋 Selamat datang di Tongkrongan Support.',
-      'time': '10:30',
-      'isSender': false,
-    },
-    {
-      'type': 'bot',
-      'content':
-          'Kami siap membantu kamu menemukan tempat nongkrong terbaik dan mengelola jadwal hangout.',
-      'time': '10:31',
-      'isSender': false,
-    },
-    {
-      'type': 'user',
-      'content': 'Halo! Ada pertanyaan tentang booking tempat nih',
-      'time': '10:32',
-      'isSender': true,
-    },
-    {
-      'type': 'bot',
-      'content': 'Tentu! Silakan tanyakan. Apa yang bisa kami bantu? 😊',
-      'time': '10:33',
-      'isSender': false,
-    },
-    {
-      'type': 'embedded',
-      'content': 'Bagaimana cara membuat janji di Tongkrongan?',
-      'cardTitle': 'Tutorial Booking',
-      'cardDescription': 'Pelajari cara membuat dan mengelola janji nongkrong',
-      'time': '10:34',
-      'isSender': false,
-    },
-    {
-      'type': 'user',
-      'content': 'Oke terima kasih! Sangat membantu 👍',
-      'time': '10:35',
-      'isSender': true,
-    },
-  ];
+  List<Message> get _currentMessages {
+    return mockMessages
+        .where((m) => m.conversationId == _selectedChat)
+        .toList()
+      ..sort((a, b) => b.sentAt.compareTo(a.sentAt));
+  }
 
   @override
   void dispose() {
     _messageController.dispose();
     super.dispose();
+  }
+
+  void _sendMessage() {
+    if (_messageController.text.trim().isEmpty) return;
+
+    final conversation = mockConversations.firstWhere((c) => c.id == _selectedChat);
+
+    setState(() {
+      final newMessage = Message(
+        id: DateTime.now().toString(),
+        conversationId: _selectedChat,
+        senderId: 'c1', // Hardcoded current user
+        senderType: 'customer',
+        content: _messageController.text,
+        sentAt: DateTime.now(),
+      );
+      mockMessages.add(newMessage);
+
+      conversation.lastMessage = newMessage.content;
+      conversation.lastMessageAt = newMessage.sentAt;
+
+      _messageController.clear();
+    });
+  }
+
+  String _formatTime(DateTime time) {
+    final now = DateTime.now();
+    final difference = now.difference(time);
+    
+    if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} menit lalu';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} jam lalu';
+    } else {
+      return '${time.day}/${time.month}/${time.year}';
+    }
+  }
+
+  String _formatMessageTime(DateTime time) {
+    return '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
   }
 
   @override
@@ -106,6 +82,9 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget _buildConversationList() {
+    // Refresh to sort by latest message
+    mockConversations.sort((a, b) => b.lastMessageAt.compareTo(a.lastMessageAt));
+
     return Column(
       children: [
         // Header
@@ -113,17 +92,19 @@ class _ChatScreenState extends State<ChatScreen> {
 
         // Conversations
         Expanded(
-          child: ListView.separated(
-            itemCount: conversations.length,
-            separatorBuilder: (_, __) => Divider(
-              height: 1,
-              color: AppTheme.outlineVariant,
-            ),
-            itemBuilder: (context, index) {
-              final chat = conversations[index];
-              return _buildConversationTile(chat);
-            },
-          ),
+          child: mockConversations.isEmpty 
+              ? const Center(child: Text('Belum ada pesan.'))
+              : ListView.separated(
+                  itemCount: mockConversations.length,
+                  separatorBuilder: (_, __) => Divider(
+                    height: 1,
+                    color: AppTheme.outlineVariant,
+                  ),
+                  itemBuilder: (context, index) {
+                    final chat = mockConversations[index];
+                    return _buildConversationTile(chat);
+                  },
+                ),
         ),
       ],
     );
@@ -162,18 +143,12 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   Text(
-                    'Pesan teman dan komunitas',
+                    'Pesan owner usaha atau admin Tongkrongan',
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       color: AppTheme.onSurfaceVariant,
                     ),
                   ),
                 ],
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.add_circle_outline),
-                color: AppTheme.primary,
-                iconSize: 24,
               ),
             ],
           ),
@@ -182,7 +157,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildConversationTile(Map<String, dynamic> chat) {
+  Widget _buildConversationTile(Conversation chat) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(
         horizontal: AppTheme.margin,
@@ -194,19 +169,19 @@ class _ChatScreenState extends State<ChatScreen> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: AppTheme.primaryFixed.withValues(alpha: 0.3),
-          border: chat['unread'] > 0
+          border: chat.unreadCount > 0
               ? Border.all(color: AppTheme.primary, width: 2)
               : null,
         ),
         child: Center(
           child: Text(
-            chat['avatar'],
+            chat.recipientAvatar,
             style: const TextStyle(fontSize: 28),
           ),
         ),
       ),
       title: Text(
-        chat['name'],
+        chat.recipientName,
         style: Theme.of(context).textTheme.labelLarge?.copyWith(
           fontWeight: FontWeight.w700,
           color: AppTheme.onSurface,
@@ -214,18 +189,9 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       subtitle: Row(
         children: [
-          if (chat['isGroup'])
-            Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: Icon(
-                Icons.groups,
-                size: 14,
-                color: AppTheme.onSurfaceVariant,
-              ),
-            ),
           Expanded(
             child: Text(
-              chat['lastMessage'],
+              chat.lastMessage,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -240,13 +206,13 @@ class _ChatScreenState extends State<ChatScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            chat['time'],
+            _formatTime(chat.lastMessageAt),
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: AppTheme.onSurfaceVariant,
               fontSize: 12,
             ),
           ),
-          if (chat['unread'] > 0) ...[
+          if (chat.unreadCount > 0) ...[
             const SizedBox(height: 4),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -255,7 +221,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 borderRadius: BorderRadius.circular(AppTheme.radiusFull),
               ),
               child: Text(
-                chat['unread'].toString(),
+                chat.unreadCount.toString(),
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: AppTheme.onPrimary,
                   fontWeight: FontWeight.w700,
@@ -267,14 +233,18 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
       onTap: () {
-        setState(() => _selectedChat = chat['id']);
+        setState(() {
+          _selectedChat = chat.id;
+          chat.unreadCount = 0; // Mark as read
+        });
       },
     );
   }
 
   Widget _buildChatDetail() {
     final currentChat =
-        conversations.firstWhere((c) => c['id'] == _selectedChat);
+        mockConversations.firstWhere((c) => c.id == _selectedChat);
+    final messages = _currentMessages;
 
     return Column(
       children: [
@@ -288,7 +258,7 @@ class _ChatScreenState extends State<ChatScreen> {
             reverse: true,
             itemCount: messages.length,
             itemBuilder: (context, index) {
-              final message = messages[messages.length - 1 - index];
+              final message = messages[index];
               return Padding(
                 padding: const EdgeInsets.only(bottom: AppTheme.spaceMd),
                 child: _buildMessageBubble(message),
@@ -303,7 +273,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildChatHeader(Map<String, dynamic> chat) {
+  Widget _buildChatHeader(Conversation chat) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppTheme.margin,
@@ -340,7 +310,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    chat['avatar'],
+                    chat.recipientAvatar,
                     style: const TextStyle(fontSize: 22),
                   ),
                 ),
@@ -351,32 +321,21 @@ class _ChatScreenState extends State<ChatScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      chat['name'],
+                      chat.recipientName,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: AppTheme.onSurface,
                       ),
                     ),
-                    if (chat['isGroup'])
-                      Text(
-                        'Grup Komunitas',
-                        style:
-                            Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: AppTheme.onSurfaceVariant,
-                        ),
+                    Text(
+                      chat.recipientType == 'owner' ? 'Owner Usaha' : 'Customer Service',
+                      style:
+                          Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: AppTheme.onSurfaceVariant,
                       ),
+                    ),
                   ],
                 ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.call),
-                color: AppTheme.primary,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.info_outline),
-                color: AppTheme.onSurfaceVariant,
               ),
             ],
           ),
@@ -385,10 +344,10 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildMessageBubble(Map<String, dynamic> message) {
-    final isSender = message['isSender'] as bool;
+  Widget _buildMessageBubble(Message message) {
+    final isSender = message.senderType == 'customer';
 
-    if (message['type'] == 'embedded') {
+    if (message.type == 'embedded') {
       return _buildEmbeddedCard(message, isSender);
     }
 
@@ -424,14 +383,14 @@ class _ChatScreenState extends State<ChatScreen> {
                   : CrossAxisAlignment.start,
               children: [
                 Text(
-                  message['content'] as String,
+                  message.content,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: textColor,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  message['time'] as String,
+                  _formatMessageTime(message.sentAt),
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: isSender
                         ? AppTheme.onPrimary.withValues(alpha: 0.7)
@@ -442,7 +401,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             ),
           ),
-          if (!isSender && message['type'] == 'bot')
+          if (!isSender && message.senderType == 'bot')
             Padding(
               padding: const EdgeInsets.only(top: 4, left: 8),
               child: Container(
@@ -469,7 +428,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildEmbeddedCard(Map<String, dynamic> message, bool isSender) {
+  Widget _buildEmbeddedCard(Message message, bool isSender) {
     return Align(
       alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
       child: Column(
@@ -515,7 +474,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            message['cardTitle'] as String,
+                            message.cardTitle ?? 'Info',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium
@@ -535,19 +494,20 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          message['cardDescription'] as String,
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppTheme.onSurfaceVariant,
+                        if (message.cardDescription != null)
+                          Text(
+                            message.cardDescription!,
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AppTheme.onSurfaceVariant,
+                            ),
                           ),
-                        ),
                         const SizedBox(height: 8),
                         Row(
                           children: [
                             Expanded(
                               child: Text(
-                                message['content'] as String,
+                                message.content,
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall
@@ -571,7 +531,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
-          if (!isSender)
+          if (!isSender && message.senderType == 'bot')
             Padding(
               padding: const EdgeInsets.only(top: 4, left: 8),
               child: Container(
@@ -636,10 +596,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             controller: _messageController,
                             maxLines: null,
                             textInputAction: TextInputAction.send,
-                            onSubmitted: (value) {
-                              // Send message
-                              _messageController.clear();
-                            },
+                            onSubmitted: (value) => _sendMessage(),
                             decoration: InputDecoration(
                               hintText: 'Tulis pesan...',
                               hintStyle: Theme.of(context)
@@ -660,28 +617,13 @@ class _ChatScreenState extends State<ChatScreen> {
                                 .bodyMedium,
                           ),
                         ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(right: 8),
-                          child: IconButton(
-                            onPressed: () {
-                              // Attach file
-                            },
-                            icon: const Icon(Icons.attach_file),
-                            color: AppTheme.secondary,
-                            iconSize: 20,
-                          ),
-                        ),
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(width: AppTheme.spaceSm),
                 GestureDetector(
-                  onTap: () {
-                    // Send message
-                    _messageController.clear();
-                  },
+                  onTap: _sendMessage,
                   child: Container(
                     width: 40,
                     height: 40,

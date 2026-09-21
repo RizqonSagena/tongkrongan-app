@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/themes/app_theme.dart';
 
 class LocationHeader extends StatelessWidget {
@@ -12,22 +13,17 @@ class LocationHeader extends StatelessWidget {
         Expanded(
           child: Row(
             children: [
-              const Icon(
-                Icons.near_me,
-                size: 16,
-                color: AppTheme.primary,
-              ),
+              const Icon(Icons.near_me, size: 16, color: AppTheme.primary),
               const SizedBox(width: 6),
               Expanded(
                 child: RichText(
                   text: TextSpan(
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: AppTheme.onSurfaceVariant,
-                    ),
+                    style: Theme.of(context).textTheme.labelSmall
+                        ?.copyWith(color: AppTheme.onSurfaceVariant),
                     children: [
                       const TextSpan(text: 'Di sekitarmu: '),
                       TextSpan(
-                        text: 'Tebet, Jakarta Selatan',
+                        text: 'Tanjung pinang, Kepulauan Riau',
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
                           color: AppTheme.onSurface,
                           fontWeight: FontWeight.w600,
@@ -48,9 +44,8 @@ class LocationHeader extends StatelessWidget {
           label: const Text('Ubah'),
           style: TextButton.styleFrom(
             foregroundColor: AppTheme.primary,
-            textStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+            textStyle: Theme.of(context).textTheme.labelSmall
+                ?.copyWith(fontWeight: FontWeight.w600),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,

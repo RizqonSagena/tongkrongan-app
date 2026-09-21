@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import '../../../../core/themes/app_theme.dart';
+import '../../../../core/models/place_model.dart';
+import '../../../../core/data/mock_places.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
@@ -15,47 +17,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
 
-  final List<Map<String, dynamic>> favorites = [
-    {
-      'name': 'Selasar Kopi & Ruang Diskusi',
-      'location': 'Jl. Tebet Timur Dalam No. 42, Jakarta Selatan',
-      'distance': '1.1 km',
-      'rating': 4.8,
-      'status': 'open',
-      'openUntil': '23.00',
-      'isFavorite': true,
-      'image':
-          'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=250&fit=crop',
-      'category': 'Coffee Shop',
-      'tags': ['Colokan Melimpah', 'WiFi Kencang', '\$\$'],
-    },
-    {
-      'name': 'Warkop Warmindo 24/7 Mas Bowo',
-      'location': 'Jl. Tebet Barat Dalam, Jakarta Selatan',
-      'distance': '800 m',
-      'rating': 4.6,
-      'status': 'open',
-      'openUntil': '24 Jam',
-      'isFavorite': true,
-      'image':
-          'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=250&fit=crop',
-      'category': 'Warkop Modern',
-      'tags': ['Nasi Telur Kornet', 'Nongkrong Malam', '\$'],
-    },
-    {
-      'name': 'Dapur Rooftop Senja',
-      'location': 'Jl. Pancoran, Jakarta Selatan',
-      'distance': '1.8 km',
-      'rating': 4.7,
-      'status': 'closed',
-      'openUntil': '19.00 Besok',
-      'isFavorite': true,
-      'image':
-          'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=250&fit=crop',
-      'category': 'Rooftop Lounge',
-      'tags': ['Live Acoustic', 'Outdoor Sunset', 'Parkir'],
-    },
-  ];
+  List<Place> get favorites => mockPlaces.where((p) => p.isFavorite).toList();
 
   @override
   void initState() {
@@ -176,12 +138,12 @@ class _FavoritesScreenState extends State<FavoritesScreen>
     );
   }
 
-  List<Map<String, dynamic>> _filterFavorites() {
+  List<Place> _filterFavorites() {
     switch (selectedFilter) {
       case 'open':
-        return favorites.where((f) => f['status'] == 'open').toList();
+        return favorites.where((f) => f.isOpen).toList();
       case 'closed':
-        return favorites.where((f) => f['status'] == 'closed').toList();
+        return favorites.where((f) => !f.isOpen).toList();
       default:
         return favorites;
     }
@@ -190,9 +152,9 @@ class _FavoritesScreenState extends State<FavoritesScreen>
   Widget _buildFilterChips(BuildContext context) {
     final allCount = favorites.length;
     final openCount =
-        favorites.where((f) => f['status'] == 'open').length;
+        favorites.where((f) => f.isOpen).length;
     final closedCount =
-        favorites.where((f) => f['status'] == 'closed').length;
+        favorites.where((f) => !f.isOpen).length;
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -327,11 +289,14 @@ class _FavoritesScreenState extends State<FavoritesScreen>
     );
   }
 
-  Widget _buildFavoriteCard(BuildContext context, Map<String, dynamic> fav) {
-    final isOpen = fav['status'] == 'open';
+  Widget _buildFavoriteCard(BuildContext context, Place fav) {
+    final isOpen = fav.isOpen;
     return GestureDetector(
       onTap: () {
-        // Navigate to detail
+        Navigator.of(context).pushNamed(
+          '/detail-place',
+          arguments: {'placeId': fav.id},
+        );
       },
       child: Card(
         margin: EdgeInsets.zero,
@@ -376,7 +341,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
     );
   }
 
-  Widget _buildImageSection(BuildContext context, Map<String, dynamic> fav,
+  Widget _buildImageSection(BuildContext context, Place fav,
       bool isOpen) {
     return Container(
       height: 176,
@@ -394,7 +359,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
               top: Radius.circular(AppTheme.radiusXl),
             ),
             child: Image.network(
-              fav['image'],
+              fav.image,
               width: double.infinity,
               height: 176,
               fit: BoxFit.cover,
@@ -498,7 +463,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    fav['rating'].toString(),
+                    fav.rating.toString(),
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: AppTheme.onSecondaryFixed,
@@ -513,7 +478,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
     );
   }
 
-  Widget _buildStatusPill(BuildContext context, Map<String, dynamic> fav,
+  Widget _buildStatusPill(BuildContext context, Place fav,
       bool isOpen) {
     final backgroundColor =
         isOpen ? AppTheme.tertiaryFixed : AppTheme.surfaceContainer;
@@ -560,7 +525,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
             ),
           const SizedBox(width: 6),
           Text(
-            isOpen ? 'Buka s/d ${fav['openUntil']}' : 'Tutup',
+            isOpen ? 'Buka s/d ${fav.openUntil}' : 'Tutup',
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: textColor,
               fontWeight: FontWeight.w700,
@@ -571,13 +536,13 @@ class _FavoritesScreenState extends State<FavoritesScreen>
     );
   }
 
-  Widget _buildTitleSection(BuildContext context, Map<String, dynamic> fav) {
+  Widget _buildTitleSection(BuildContext context, Place fav) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: Text(
-            fav['name'],
+            fav.name,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.w700,
               color: AppTheme.onSurface,
@@ -588,7 +553,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
         ),
         const SizedBox(width: AppTheme.spaceSm),
         Text(
-          fav['distance'],
+          fav.distance,
           style: Theme.of(context).textTheme.labelSmall?.copyWith(
             color: AppTheme.secondary,
             fontWeight: FontWeight.w700,
@@ -598,7 +563,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
     );
   }
 
-  Widget _buildLocationSection(BuildContext context, Map<String, dynamic> fav) {
+  Widget _buildLocationSection(BuildContext context, Place fav) {
     return Row(
       children: [
         Icon(
@@ -609,7 +574,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
         const SizedBox(width: 4),
         Expanded(
           child: Text(
-            fav['location'],
+            fav.location,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: AppTheme.onSurfaceVariant,
             ),
@@ -621,8 +586,8 @@ class _FavoritesScreenState extends State<FavoritesScreen>
     );
   }
 
-  Widget _buildTagsSection(BuildContext context, Map<String, dynamic> fav) {
-    final tags = fav['tags'] as List<String>;
+  Widget _buildTagsSection(BuildContext context, Place fav) {
+    final tags = fav.tags;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -652,7 +617,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
     );
   }
 
-  Widget _buildActionRow(BuildContext context, Map<String, dynamic> fav,
+  Widget _buildActionRow(BuildContext context, Place fav,
       bool isOpen) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -681,7 +646,10 @@ class _FavoritesScreenState extends State<FavoritesScreen>
         ),
         ElevatedButton.icon(
           onPressed: () {
-            // Navigate to detail
+            Navigator.of(context).pushNamed(
+              '/detail-place',
+              arguments: {'placeId': fav.id},
+            );
           },
           icon: const Icon(Icons.arrow_forward, size: 14),
           label: const Text('Lihat'),

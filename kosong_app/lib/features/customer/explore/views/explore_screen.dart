@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'dart:ui';
+
 import '../../../../core/themes/app_theme.dart';
 import '../widgets/place_card.dart';
 import '../widgets/filter_chips.dart';
 import '../widgets/search_bar_widget.dart';
+import '../../../../core/data/mock_places.dart';
+import '../../../../core/models/place_model.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -18,85 +22,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
   String _selectedCategory = '☕ Coffee Shop';
   List<String> _activeFilters = ['Buka Sekarang'];
 
-  final List<Map<String, dynamic>> _places = [
-    {
-      'id': '1',
-      'name': 'Kala Kopi & Ruang Cerita',
-      'category': 'Specialty Coffee & Eatery',
-      'location': 'Tebet Barat, Jakarta Selatan',
-      'distance': '900 m',
-      'rating': 4.8,
-      'reviewCount': 94,
-      'isOpen': true,
-      'openUntil': '23.00',
-      'isFavorite': true,
-      'image':
-          'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=250&fit=crop',
-      'tags': ['WiFi Kencang', 'Indoor AC', 'Banyak Colokan'],
-      'promo': null,
-      'price': null,
-      'description': 'Suasana Pas Nongkrong',
-    },
-    {
-      'id': '2',
-      'name': 'Dapur Rooftop Senja',
-      'category': 'Rooftop Lounge',
-      'location': 'Pancoran, Jakarta Selatan',
-      'distance': '1.8 km',
-      'rating': 4.7,
-      'reviewCount': 150,
-      'isOpen': true,
-      'openUntil': '01.00',
-      'isFavorite': false,
-      'image':
-          'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=250&fit=crop',
-      'tags': ['Live Acoustic', 'Outdoor Sunset', 'Area Terbuka'],
-      'promo': null,
-      'price': null,
-      'description': 'Live Mulai 19.30',
-    },
-    {
-      'id': '3',
-      'name': 'Kedai Bakmi & Es Cendol Oma',
-      'category': 'UMKM Kuliner Tradisional',
-      'location': 'Tebet Timur, Jakarta Selatan',
-      'distance': '1.2 km',
-      'rating': 4.9,
-      'reviewCount': 210,
-      'isOpen': true,
-      'openUntil': '21.00',
-      'isFavorite': false,
-      'image':
-          'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=250&fit=crop',
-      'tags': ['🍜 Legendaris Sejak 1989', '❄️ Es Cendol Nangka', '🛵 Parkir Luas'],
-      'promo': 'Diskon 15%',
-      'price': 'Mulai Rp 18.000',
-      'description': null,
-    },
-    {
-      'id': '4',
-      'name': 'Warkop Berkah Rezeki',
-      'category': 'Warkop Modern',
-      'location': 'Manggarai, Jakarta Selatan',
-      'distance': '2.3 km',
-      'rating': 4.6,
-      'reviewCount': 89,
-      'isOpen': true,
-      'openUntil': '24 Jam',
-      'isFavorite': false,
-      'image':
-          'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=250&fit=crop',
-      'tags': ['Buka 24 Jam', 'Indomie Special', 'Kopi Susu Legendary'],
-      'promo': null,
-      'price': 'Mulai Rp 12.000',
-      'description': null,
-    },
-  ];
+  List<Place> _places = [];
 
   @override
   void initState() {
     super.initState();
-    _searchController.text = 'Kopi susu gula aren';
+    _places = mockPlaces;
+    _searchController.text = 'kopi dan roti';
   }
 
   @override
@@ -185,12 +117,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             // Navigate to place detail
                             Navigator.of(context).pushNamed(
                               '/detail-place',
-                              arguments: {'placeId': place['id']},
+                              arguments: {'placeId': place.id},
                             );
                           },
                           onFavoriteToggle: () {
                             setState(() {
-                              place['isFavorite'] = !place['isFavorite'];
+                              place.isFavorite = !place.isFavorite;
                             });
                           },
                         );
@@ -237,8 +169,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       height: 36,
                       decoration: BoxDecoration(
                         color: AppTheme.primary,
-                        borderRadius:
-                            BorderRadius.circular(AppTheme.radiusMd),
+                        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                       ),
                       child: const Icon(
                         Icons.location_on,
@@ -252,9 +183,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       children: [
                         Text(
                           'Tongkrongan',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
+                          style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
                                 color: AppTheme.primary,
                                 fontWeight: FontWeight.w700,
@@ -262,12 +191,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         ),
                         Text(
                           'Tempat Seru Buat Nongkrong',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(
-                                color: AppTheme.onSurfaceVariant,
-                              ),
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(color: AppTheme.onSurfaceVariant),
                         ),
                       ],
                     ),
@@ -330,25 +255,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
           Expanded(
             child: Row(
               children: [
-                Icon(
-                  Icons.near_me,
-                  size: 16,
-                  color: AppTheme.primary,
-                ),
+                Icon(Icons.near_me, size: 16, color: AppTheme.primary),
                 const SizedBox(width: 8),
                 Expanded(
                   child: RichText(
                     text: TextSpan(
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: AppTheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall
+                          ?.copyWith(color: AppTheme.onSurfaceVariant),
                       children: [
                         const TextSpan(text: 'Di sekitarmu: '),
                         TextSpan(
-                          text: 'Tebet, Jakarta Selatan',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
+                          text: 'Tanjung pinang,kepulauan riau',
+                          style: Theme.of(context).textTheme.labelSmall
                               ?.copyWith(
                                 color: AppTheme.onSurface,
                                 fontWeight: FontWeight.w600,
@@ -410,9 +328,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
               const SizedBox(width: AppTheme.spaceXs),
               Text(
                 'dekatmu',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppTheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.bodySmall
+                    ?.copyWith(color: AppTheme.onSurfaceVariant),
               ),
             ],
           ),

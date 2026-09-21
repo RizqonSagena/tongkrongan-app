@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'dart:ui';
+
 import '../../../../core/themes/app_theme.dart';
 
+import '../../../../../core/models/place_model.dart';
+
 class PlaceCard extends StatefulWidget {
-  final Map<String, dynamic> place;
+  final Place place;
   final VoidCallback? onTap;
   final VoidCallback? onFavoriteToggle;
 
@@ -108,7 +112,7 @@ class _PlaceCardState extends State<PlaceCard>
               top: Radius.circular(AppTheme.radiusXl),
             ),
             child: Image.network(
-              widget.place['image'],
+              widget.place.image,
               width: double.infinity,
               height: 176,
               fit: BoxFit.cover,
@@ -217,9 +221,9 @@ class _PlaceCardState extends State<PlaceCard>
           ),
           const SizedBox(width: 6),
           Text(
-            widget.place['openUntil'] == '24 Jam'
+            widget.place.openUntil == '24 Jam'
                 ? 'Buka 24 Jam'
-                : 'Buka s/d ${widget.place['openUntil']}',
+                : 'Buka s/d ${widget.place.openUntil}',
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: AppTheme.onTertiaryFixed,
               fontWeight: FontWeight.w700,
@@ -258,11 +262,9 @@ class _PlaceCardState extends State<PlaceCard>
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
             child: Icon(
-              widget.place['isFavorite']
-                  ? Icons.favorite
-                  : Icons.favorite_border,
+              widget.place.isFavorite ? Icons.favorite : Icons.favorite_border,
               size: 18,
-              color: widget.place['isFavorite']
+              color: widget.place.isFavorite
                   ? AppTheme.primary
                   : AppTheme.outline,
             ),
@@ -285,7 +287,7 @@ class _PlaceCardState extends State<PlaceCard>
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
           child: Text(
-            widget.place['category'],
+            widget.place.category,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: AppTheme.inverseOnSurface,
               fontWeight: FontWeight.w700,
@@ -307,7 +309,7 @@ class _PlaceCardState extends State<PlaceCard>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.place['name'],
+                widget.place.name,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppTheme.onSurface,
@@ -318,18 +320,13 @@ class _PlaceCardState extends State<PlaceCard>
               const SizedBox(height: 4),
               Row(
                 children: [
-                  Icon(
-                    Icons.location_on,
-                    size: 16,
-                    color: AppTheme.primary,
-                  ),
+                  Icon(Icons.location_on, size: 16, color: AppTheme.primary),
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(
-                      widget.place['location'],
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppTheme.onSurfaceVariant,
-                      ),
+                      widget.place.location,
+                      style: Theme.of(context).textTheme.bodySmall
+                          ?.copyWith(color: AppTheme.onSurfaceVariant),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -351,14 +348,10 @@ class _PlaceCardState extends State<PlaceCard>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.star_rounded,
-                size: 14,
-                color: AppTheme.secondary,
-              ),
+              Icon(Icons.star_rounded, size: 14, color: AppTheme.secondary),
               const SizedBox(width: 4),
               Text(
-                widget.place['rating'].toString(),
+                widget.place.rating.toString(),
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: AppTheme.onSecondaryFixed,
@@ -366,7 +359,7 @@ class _PlaceCardState extends State<PlaceCard>
               ),
               const SizedBox(width: 2),
               Text(
-                '(${widget.place['reviewCount']})',
+                '(${widget.place.reviewCount})',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: AppTheme.onSurfaceVariant,
                   fontWeight: FontWeight.w500,
@@ -380,7 +373,7 @@ class _PlaceCardState extends State<PlaceCard>
   }
 
   Widget _buildTags(BuildContext context) {
-    final tags = widget.place['tags'] as List<String>;
+    final tags = widget.place.tags;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -391,19 +384,15 @@ class _PlaceCardState extends State<PlaceCard>
               right: index < tags.length - 1 ? AppTheme.spaceXs : 0,
             ),
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 4,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: AppTheme.surfaceContainerLow,
                 borderRadius: BorderRadius.circular(AppTheme.radiusMd),
               ),
               child: Text(
                 tags[index],
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: AppTheme.onSurfaceVariant,
-                ),
+                style: Theme.of(context).textTheme.labelSmall
+                    ?.copyWith(color: AppTheme.onSurfaceVariant),
               ),
             ),
           ),

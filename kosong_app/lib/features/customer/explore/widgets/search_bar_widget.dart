@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/themes/app_theme.dart';
 
 class SearchBarWidget extends StatefulWidget {
@@ -52,8 +53,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     return Container(
       height: 48, // h-12
       decoration: BoxDecoration(
-        color: _isFocused 
-            ? AppTheme.surfaceContainer 
+        color: _isFocused
+            ? AppTheme.surfaceContainer
             : AppTheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppTheme.radiusXl),
         boxShadow: [AppTheme.shadowSm],
@@ -64,18 +65,16 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         onChanged: widget.onChanged,
         decoration: InputDecoration(
           hintText: 'Cari kafe, kedai, makanan, suasana...',
-          hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: AppTheme.outline,
-          ),
+          hintStyle: Theme.of(context).textTheme.bodyMedium
+              ?.copyWith(color: AppTheme.outline),
           prefixIcon: Padding(
             padding: const EdgeInsets.only(left: 12, right: 8),
-            child: Icon(
-              Icons.search,
-              color: AppTheme.secondary,
-              size: 22,
-            ),
+            child: Icon(Icons.search, color: AppTheme.secondary, size: 22),
           ),
-          prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+          prefixIconConstraints: const BoxConstraints(
+            minWidth: 0,
+            minHeight: 0,
+          ),
           suffixIcon: widget.controller.text.isNotEmpty
               ? Padding(
                   padding: const EdgeInsets.only(right: 4),
@@ -101,7 +100,10 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   ),
                 )
               : null,
-          suffixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+          suffixIconConstraints: const BoxConstraints(
+            minWidth: 0,
+            minHeight: 0,
+          ),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/themes/app_theme.dart';
 
 class FilterChips extends StatelessWidget {
@@ -28,7 +29,7 @@ class FilterChips extends StatelessWidget {
           context,
           title: 'Jarak:',
           icon: Icons.straighten,
-          options: ['Semua Jarak', '< 1 km', '1-3 km', '3-5 km', '> 5 km'],
+          options: ['Semua Jarak', '0-1 km', '1-3 km', '3-5 km', '> 5 km'],
           selectedOption: selectedDistance,
           onOptionSelected: onDistanceChanged,
           isDistanceFilter: true,
@@ -41,9 +42,8 @@ class FilterChips extends StatelessWidget {
           options: [
             '☕ Coffee Shop',
             '🍜 Warkop & Angkringan',
-            '🌇 Rooftop & Sunset',
-            '🍛 Eatery & Resto UMKM',
-            '🍧 Kedai Es & Dessert',
+            '🌇 View (viral)',
+            '🍛 Kedai',
           ],
           selectedOption: selectedCategory,
           onOptionSelected: onCategoryChanged,
@@ -83,11 +83,7 @@ class FilterChips extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (icon != null) ...[
-                    Icon(
-                      icon,
-                      size: 15,
-                      color: AppTheme.onSurfaceVariant,
-                    ),
+                    Icon(icon, size: 15, color: AppTheme.onSurfaceVariant),
                     const SizedBox(width: 4),
                   ],
                   Text(
@@ -151,9 +147,7 @@ class FilterChips extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected ? AppTheme.primary : AppTheme.surfaceContainer,
           borderRadius: BorderRadius.circular(AppTheme.radiusFull),
-          boxShadow: isSelected
-              ? [AppTheme.shadowSm]
-              : null,
+          boxShadow: isSelected ? [AppTheme.shadowSm] : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -169,11 +163,7 @@ class FilterChips extends StatelessWidget {
             ),
             if (isSelected) ...[
               const SizedBox(width: 6),
-              Icon(
-                Icons.check,
-                size: 14,
-                color: AppTheme.onPrimary,
-              ),
+              Icon(Icons.check, size: 14, color: AppTheme.onPrimary),
             ],
           ],
         ),
@@ -197,9 +187,7 @@ class FilterChips extends StatelessWidget {
               ? AppTheme.primaryFixed
               : AppTheme.surfaceContainerLow,
           borderRadius: BorderRadius.circular(AppTheme.radiusFull),
-          boxShadow: isSelected
-              ? [AppTheme.shadowSm]
-              : null,
+          boxShadow: isSelected ? [AppTheme.shadowSm] : null,
         ),
         child: Text(
           label,
@@ -228,9 +216,7 @@ class FilterChips extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected ? AppTheme.primary : AppTheme.surfaceContainer,
           borderRadius: BorderRadius.circular(AppTheme.radiusFull),
-          boxShadow: isSelected
-              ? [AppTheme.shadowSm]
-              : null,
+          boxShadow: isSelected ? [AppTheme.shadowSm] : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -246,11 +232,7 @@ class FilterChips extends StatelessWidget {
             ),
             if (isSelected) ...[
               const SizedBox(width: 4),
-              Icon(
-                Icons.check,
-                size: 14,
-                color: AppTheme.onPrimary,
-              ),
+              Icon(Icons.check, size: 14, color: AppTheme.onPrimary),
             ],
           ],
         ),
@@ -264,37 +246,37 @@ class FilterChips extends StatelessWidget {
         'label': 'Buka Sekarang',
         'icon': Icons.circle,
         'color': AppTheme.tertiary,
-        'type': 'status'
+        'type': 'status',
       },
       {
         'label': 'Rating 4.5+',
         'icon': Icons.star_rounded,
         'color': AppTheme.secondary,
-        'type': 'rating'
+        'type': 'rating',
       },
       {
         'label': 'Ada Promo',
         'icon': Icons.local_offer,
         'color': AppTheme.primary,
-        'type': 'promo'
+        'type': 'promo',
       },
       {
         'label': 'WiFi Kencang',
         'icon': Icons.wifi,
         'color': AppTheme.tertiary,
-        'type': 'amenity'
+        'type': 'amenity',
       },
       {
         'label': 'Smoking Area',
         'icon': Icons.smoking_rooms,
         'color': AppTheme.outline,
-        'type': 'amenity'
+        'type': 'amenity',
       },
       {
         'label': 'Colokan Banyak',
         'icon': Icons.power,
         'color': AppTheme.secondary,
-        'type': 'amenity'
+        'type': 'amenity',
       },
     ];
 
@@ -338,7 +320,9 @@ class FilterChips extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
-          color: isActive ? AppTheme.tertiaryFixed : AppTheme.surfaceContainerLowest,
+          color: isActive
+              ? AppTheme.tertiaryFixed
+              : AppTheme.surfaceContainerLowest,
           borderRadius: BorderRadius.circular(AppTheme.radiusFull),
           boxShadow: [AppTheme.shadowSm],
         ),

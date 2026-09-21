@@ -5,6 +5,8 @@ import '../../features/customer/explore/views/explore_screen.dart';
 import '../../features/customer/detail_place/views/detail_place_screen.dart';
 import '../../features/customer/favorites/views/favorites_screen.dart';
 import '../../features/customer/booking/views/booking_screen.dart';
+import '../../features/customer/booking/views/booking_detail_screen.dart';
+import '../../features/customer/booking/views/booking_change_request_screen.dart';
 import '../../features/customer/chat/views/chat_screen.dart';
 import '../../features/customer/profile/views/profile_screen.dart';
 import '../widgets/main_layout.dart';
@@ -19,6 +21,8 @@ class AppRouter {
   static const String detailPlace = '/detail-place';
   static const String favorites = '/favorites';
   static const String booking = '/booking';
+  static const String bookingDetail = '/booking-detail';
+  static const String bookingChangeRequest = '/booking-change-request';
   static const String chat = '/chat';
   static const String profile = '/profile';
 
@@ -70,6 +74,20 @@ class AppRouter {
       case booking:
         return MaterialPageRoute(
           builder: (_) => const BookingScreen(),
+          settings: settings,
+        );
+      case bookingDetail:
+        return MaterialPageRoute(
+          builder: (_) => BookingDetailScreen(
+            bookingId: settings.arguments as String,
+          ),
+          settings: settings,
+        );
+      case bookingChangeRequest:
+        return MaterialPageRoute(
+          builder: (_) => BookingChangeRequestScreen(
+            bookingId: settings.arguments as String,
+          ),
           settings: settings,
         );
       case chat:

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import '../../../../core/themes/app_theme.dart';
+import '../../../../core/models/booking_model.dart';
+import '../../../../core/data/mock_bookings.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -11,42 +13,18 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   String _tab = 'active';
-  
-  final List<Map<String, dynamic>> _activeBookings = [
-    {
-      'id': '1',
-      'title': 'Kopi Pagi Bareng Tim',
-      'place': 'Selasar Kopi & Ruang Diskusi',
-      'date': 'Besok, 09.00 - 11.00',
-      'members': 4,
-      'image':
-          'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=250&fit=crop',
-      'status': 'upcoming',
-    },
-    {
-      'id': '2',
-      'title': 'Rapat Kerja Freelancer',
-      'place': 'Warkop Warmindo 24/7',
-      'date': 'Minggu, 15.00 - 17.00',
-      'members': 3,
-      'image':
-          'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=250&fit=crop',
-      'status': 'upcoming',
-    },
-  ];
 
-  final List<Map<String, dynamic>> _pastBookings = [
-    {
-      'id': '3',
-      'title': 'Hangout Santai Sabtu',
-      'place': 'Dapur Rooftop Senja',
-      'date': 'Sabtu, 18.00 - 20.00',
-      'members': 5,
-      'image':
-          'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=250&fit=crop',
-      'status': 'completed',
-    },
-  ];
+  List<Booking> get _activeBookings {
+    return mockBookings
+        .where((b) => b.status == 'upcoming' || b.status == 'pending')
+        .toList();
+  }
+
+  List<Booking> get _pastBookings {
+    return mockBookings
+        .where((b) => b.status == 'completed' || b.status == 'cancelled')
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -270,10 +248,30 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  Widget _buildBookingCard(BuildContext context, Map<String, dynamic> booking) {
+  Widget _buildBookingCard(BuildContext context, Booking booking) {
+    String badgeText = 'Akan Datang';
+    Color badgeColor = AppTheme.tertiary;
+
+    if (booking.status == 'completed') {
+      badgeText = 'Selesai';
+      badgeColor = AppTheme.outline;
+    } else if (booking.status == 'cancelled') {
+      badgeText = 'Dibatalkan';
+      badgeColor = AppTheme.error;
+    } else if (booking.changeRequest != null && booking.changeRequest!.status == 'pending') {
+      badgeText = 'Menunggu Persetujuan';
+      badgeColor = Colors.orange;
+    } else if (booking.changeRequest != null && booking.changeRequest!.status == 'rejected') {
+      badgeText = 'Perubahan Ditolak';
+      badgeColor = AppTheme.error;
+    }
+
     return GestureDetector(
       onTap: () {
-        // Navigate to booking detail
+        Navigator.of(context).pushNamed('/booking-detail', arguments: booking.id).then((_) {
+          // Refresh list when coming back
+          setState(() {});
+        });
       },
       child: Card(
         margin: EdgeInsets.zero,
@@ -302,7 +300,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       top: Radius.circular(AppTheme.radiusXl),
                     ),
                     child: Image.network(
-                      booking['image'],
+                      booking.image,
                       width: double.infinity,
                       height: 140,
                       fit: BoxFit.cover,
@@ -340,17 +338,15 @@ class _BookingScreenState extends State<BookingScreen> {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: AppTheme.tertiary.withValues(alpha: 0.9),
+                        color: badgeColor.withValues(alpha: 0.9),
                         borderRadius: BorderRadius.circular(AppTheme.radiusFull),
                         boxShadow: [AppTheme.shadowMd],
                       ),
                       child: Text(
-                        booking['status'] == 'upcoming'
-                            ? 'Akan Datang'
-                            : 'Selesai',
+                        badgeText,
                         style:
                             Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: AppTheme.onTertiary,
+                          color: Colors.white,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -368,7 +364,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 children: [
                   // Title
                   Text(
-                    booking['title'],
+                    booking.title,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: AppTheme.onSurface,
@@ -389,7 +385,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       const SizedBox(width: 4),
                       Expanded(
                         child: Text(
-                          booking['place'],
+                          booking.placeName,
                           style:
                               Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AppTheme.onSurfaceVariant,
@@ -413,7 +409,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       const SizedBox(width: 4),
                       Expanded(
                         child: Text(
-                          booking['date'],
+                          '${booking.date}, ${booking.startTime} - ${booking.endTime}',
                           style:
                               Theme.of(context).textTheme.labelSmall?.copyWith(
                             color: AppTheme.onSurfaceVariant,
@@ -434,7 +430,7 @@ class _BookingScreenState extends State<BookingScreen> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        '${booking['members']} peserta',
+                        '${booking.participantCount} peserta',
                         style:
                             Theme.of(context).textTheme.labelSmall?.copyWith(
                           color: AppTheme.onSurfaceVariant,
@@ -447,33 +443,39 @@ class _BookingScreenState extends State<BookingScreen> {
                   // Action buttons
                   Row(
                     children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () {
-                            // Edit booking
-                          },
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: AppTheme.primary,
-                            side: BorderSide(
-                              color: AppTheme.outline,
+                      if (booking.status == 'upcoming')
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/booking-change-request', arguments: booking.id).then((_) {
+                                setState(() {});
+                              });
+                            },
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: AppTheme.primary,
+                              side: BorderSide(
+                                color: AppTheme.outline,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppTheme.spaceSm,
+                                vertical: AppTheme.spaceXs,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(AppTheme.radiusFull),
+                              ),
                             ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppTheme.spaceSm,
-                              vertical: AppTheme.spaceXs,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(AppTheme.radiusFull),
-                            ),
+                            child: const Text('Ajukan Perubahan'),
                           ),
-                          child: const Text('Edit'),
                         ),
-                      ),
-                      const SizedBox(width: AppTheme.spaceSm),
+                      if (booking.status == 'upcoming')
+                        const SizedBox(width: AppTheme.spaceSm),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            // View detail
+                            Navigator.of(context).pushNamed('/booking-detail', arguments: booking.id).then((_) {
+                              setState(() {});
+                            });
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppTheme.primary,
@@ -506,7 +508,7 @@ class _BookingScreenState extends State<BookingScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => _BookingFormSheet(),
+      builder: (context) => const _BookingFormSheet(),
     );
   }
 }
@@ -522,11 +524,9 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
   final _titleController = TextEditingController();
   final _placeController = TextEditingController();
   final _descriptionController = TextEditingController();
-  int _personCount = 1;
   String _selectedDate = '';
   String _selectedStartTime = '';
   String _selectedEndTime = '';
-  String _selectedPurpose = 'casual';
 
   @override
   void dispose() {
@@ -584,7 +584,7 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
                   ),
                   const SizedBox(height: AppTheme.spaceMd),
 
-                  // Title Input
+                  // Form Fields
                   _buildFormField(
                     context,
                     label: 'Judul Janji',
@@ -594,7 +594,6 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
                   ),
                   const SizedBox(height: AppTheme.spaceMd),
 
-                  // Place Input
                   _buildFormField(
                     context,
                     label: 'Tempat Nongkrong',
@@ -604,11 +603,9 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
                   ),
                   const SizedBox(height: AppTheme.spaceMd),
 
-                  // Date Input
                   _buildDateField(context),
                   const SizedBox(height: AppTheme.spaceMd),
 
-                  // Time Inputs
                   Row(
                     children: [
                       Expanded(
@@ -634,47 +631,11 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
                   ),
                   const SizedBox(height: AppTheme.spaceMd),
 
-                  // Purpose Chips
-                  Text(
-                    'Tujuan Nongkrong',
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: AppTheme.spaceXs),
-                  _buildPurposeChips(context),
-                  const SizedBox(height: AppTheme.spaceMd),
-
-                  // Person Count
-                  Text(
-                    'Jumlah Peserta',
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: AppTheme.spaceXs),
-                  _buildPersonCountButton(context),
-                  const SizedBox(height: AppTheme.spaceMd),
-
-                  // Description
-                  _buildFormField(
-                    context,
-                    label: 'Catatan (Optional)',
-                    icon: Icons.notes,
-                    controller: _descriptionController,
-                    placeholder: 'Tambahkan catatan...',
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: AppTheme.spaceMd),
-
                   // Submit button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Submit booking
                         Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -718,7 +679,6 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
     required IconData icon,
     required TextEditingController controller,
     required String placeholder,
-    int maxLines = 1,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -733,19 +693,9 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
         const SizedBox(height: AppTheme.spaceXs),
         TextField(
           controller: controller,
-          maxLines: maxLines,
           decoration: InputDecoration(
             hintText: placeholder,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(left: 12, right: 8),
-              child: Icon(
-                icon,
-                color: AppTheme.secondary,
-                size: 20,
-              ),
-            ),
-            prefixIconConstraints:
-                const BoxConstraints(minWidth: 0, minHeight: 0),
+            prefixIcon: Icon(icon, color: AppTheme.secondary, size: 20),
             filled: true,
             fillColor: AppTheme.surfaceContainer,
             border: OutlineInputBorder(
@@ -805,19 +755,12 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  _selectedDate.isEmpty
-                      ? 'Pilih tanggal'
-                      : _selectedDate,
+                  _selectedDate.isEmpty ? 'Pilih Tanggal' : _selectedDate,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: _selectedDate.isEmpty
                         ? AppTheme.outline
                         : AppTheme.onSurface,
                   ),
-                ),
-                const Spacer(),
-                Icon(
-                  Icons.chevron_right,
-                  color: AppTheme.onSurfaceVariant,
                 ),
               ],
             ),
@@ -831,14 +774,14 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
     BuildContext context, {
     required String label,
     required String value,
-    required ValueChanged<String> onChanged,
+    required Function(String) onChanged,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(
             fontWeight: FontWeight.w600,
             color: AppTheme.onSurface,
           ),
@@ -851,6 +794,7 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
               initialTime: TimeOfDay.now(),
             );
             if (picked != null) {
+              // ignore: use_build_context_synchronously
               onChanged(picked.format(context));
             }
           },
@@ -864,101 +808,26 @@ class _BookingFormSheetState extends State<_BookingFormSheet> {
               borderRadius: BorderRadius.circular(AppTheme.radiusLg),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Icon(
+                  Icons.access_time,
+                  color: AppTheme.secondary,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
                 Text(
-                  value.isEmpty ? 'Jam' : value,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  value.isEmpty ? '--:--' : value,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: value.isEmpty
                         ? AppTheme.outline
                         : AppTheme.onSurface,
                   ),
-                ),
-                Icon(
-                  Icons.schedule,
-                  size: 18,
-                  color: AppTheme.secondary,
                 ),
               ],
             ),
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildPurposeChips(BuildContext context) {
-    final purposes = [
-      {'label': 'Casual', 'value': 'casual'},
-      {'label': 'Rapat', 'value': 'meeting'},
-      {'label': 'Event', 'value': 'event'},
-    ];
-
-    return Wrap(
-      spacing: AppTheme.spaceSm,
-      runSpacing: AppTheme.spaceSm,
-      children: purposes.map((purpose) {
-        final isSelected = _selectedPurpose == purpose['value'];
-        return GestureDetector(
-          onTap: () =>
-              setState(() => _selectedPurpose = purpose['value'] as String),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 6,
-            ),
-            decoration: BoxDecoration(
-              color: isSelected ? AppTheme.primary : AppTheme.surfaceContainer,
-              borderRadius: BorderRadius.circular(AppTheme.radiusFull),
-            ),
-            child: Text(
-              purpose['label'] as String,
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                color: isSelected
-                    ? AppTheme.onPrimary
-                    : AppTheme.onSurfaceVariant,
-                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-              ),
-            ),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _buildPersonCountButton(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            onPressed: _personCount > 1
-                ? () => setState(() => _personCount--)
-                : null,
-            icon: const Icon(Icons.remove),
-            color: AppTheme.primary,
-          ),
-          Text(
-            '$_personCount orang',
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: AppTheme.onSurface,
-            ),
-          ),
-          IconButton(
-            onPressed: _personCount < 50
-                ? () => setState(() => _personCount++)
-                : null,
-            icon: const Icon(Icons.add),
-            color: AppTheme.primary,
-          ),
-        ],
-      ),
     );
   }
 }

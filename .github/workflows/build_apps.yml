@@ -1,4 +1,4 @@
-name: Build Flutter Apps (APK & IPA)
+﻿name: Build Flutter Apps (APK & IPA)
 
 on:
   push:
@@ -29,16 +29,16 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       
-      - run: cd tongkrongan_app && flutter clean && flutter pub get
+      - run: cd kosong_app && flutter clean && flutter pub get
         name: Get dependencies
       
-      - run: cd tongkrongan_app && flutter build apk --release
+      - run: cd kosong_app && flutter build apk --release
         name: Build APK
       
       - uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: tongkrongan_app/build/app/outputs/flutter-apk/app-release.apk
+          path: kosong_app/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
 
   build-ios:
@@ -54,14 +54,14 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
       
-      - run: cd tongkrongan_app && flutter clean && flutter pub get
+      - run: cd kosong_app && flutter clean && flutter pub get
         name: Get dependencies
       
-      - run: cd tongkrongan_app && flutter build ios --release --no-codesign
+      - run: cd kosong_app && flutter build ios --release --no-codesign
         name: Build iOS
       
       - run: |
-          cd tongkrongan_app/build/ios/iphoneos
+          cd kosong_app/build/ios/iphoneos
           mkdir -p Payload
           cp -r Runner.app Payload/
           zip -r Runner.ipa Payload/
@@ -70,5 +70,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: ios-ipa-unsigned
-          path: tongkrongan_app/build/ios/iphoneos/Runner.ipa
+          path: kosong_app/build/ios/iphoneos/Runner.ipa
           retention-days: 30
+

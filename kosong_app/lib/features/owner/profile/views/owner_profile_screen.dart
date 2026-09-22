@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/themes/app_theme.dart';
+import '../../../../core/router/app_router.dart';
 
 class OwnerProfileScreen extends StatelessWidget {
   const OwnerProfileScreen({super.key});
@@ -109,6 +110,9 @@ class OwnerProfileScreen extends StatelessWidget {
             _buildMenuItem(context, Icons.settings, 'Pengaturan Bisnis', () {}),
             _buildMenuItem(context, Icons.credit_card, 'Metode Pembayaran', () {}),
             _buildMenuItem(context, Icons.receipt, 'Riwayat Transaksi', () {}),
+            _buildMenuItem(context, Icons.calculate, 'HPP & Harga Menu', () {
+              Navigator.pushNamed(context, AppRouter.ownerHppMenu);
+            }),
             _buildMenuItem(context, Icons.help, 'Bantuan', () {}),
             _buildMenuItem(context, Icons.logout, 'Keluar', () {}, color: AppTheme.error),
           ],

@@ -6,7 +6,7 @@ List<Conversation> mockConversations = [
     customerId: 'c1',
     recipientId: 'o1',
     recipientType: 'owner',
-    recipientName: 'Owner - Selasar Kopi & Ruang Diskusi',
+    recipientName: 'Owner - Morning Bakery',
     recipientAvatar: '☕',
     placeId: 'p1',
     lastMessage: 'Terima kasih, booking kamu sudah dikonfirmasi.',
@@ -40,8 +40,7 @@ List<Message> mockMessages = [
     conversationId: 'conv2',
     senderId: 'a1',
     senderType: 'admin',
-    content:
-        'Kami siap membantu kamu menemukan tempat nongkrong terbaik dan mengelola jadwal hangout.',
+    content: 'Kami siap membantu kamu menemukan tempat nongkrong terbaik dan mengelola jadwal hangout.',
     sentAt: DateTime.now().subtract(const Duration(hours: 1, minutes: 9)),
   ),
   Message(
@@ -94,7 +93,8 @@ List<Message> mockMessages = [
     conversationId: 'conv1',
     senderId: 'c1',
     senderType: 'customer',
-    content: 'Halo kak, untuk reservasi besok masih ada meja kosong untuk 4 orang?',
+    content:
+        'Halo kak, untuk reservasi besok masih ada meja kosong untuk 4 orang?',
     sentAt: DateTime.now().subtract(const Duration(minutes: 20)),
   ),
   Message(

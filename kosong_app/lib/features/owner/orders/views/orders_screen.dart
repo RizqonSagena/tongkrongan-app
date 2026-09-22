@@ -243,6 +243,24 @@ class _OrdersScreenState extends State<OrdersScreen>
     return _orders.where((o) => o['status'] == _selectedStatus).toList();
   }
 
+  void _updateOrderStatus(String orderId, String newStatus, int newStage) {
+    setState(() {
+      final index = _orders.indexWhere((o) => o['id'] == orderId);
+      if (index != -1) {
+        _orders[index]['status'] = newStatus;
+        _orders[index]['stage'] = newStage;
+      }
+    });
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Status pesanan diperbarui menjadi ${_getStatusLabel(newStatus)}'),
+        backgroundColor: AppTheme.primary,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
   Widget _buildEmptyState(BuildContext context) {
     return Center(
       child: Column(
@@ -490,7 +508,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                               const SizedBox(width: AppTheme.spaceSm),
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () => _updateOrderStatus(order['id'], 'preparing', 2),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppTheme.primary,
                                   ),
@@ -504,7 +522,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                             children: [
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () => _updateOrderStatus(order['id'], 'ready', 3),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppTheme.tertiary,
                                   ),
@@ -518,7 +536,7 @@ class _OrdersScreenState extends State<OrdersScreen>
                             children: [
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () => _updateOrderStatus(order['id'], 'completed', 4),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppTheme.secondary,
                                   ),

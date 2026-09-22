@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'dart:ui';
+
 import '../../../../core/themes/app_theme.dart';
 
 class AnalyticsScreen extends StatefulWidget {
@@ -16,7 +18,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   final List<Map<String, dynamic>> _topProducts = [
     {
       'image': 'https://images.unsplash.com/photo-1559056199-641a0ac8b3f7?w=200&h=200&fit=crop',
-      'name': 'Es Kopi Selasar Aren',
+      'name': 'Kopi Morning bakery',
       'qty': '310 cup/minggu',
       'status': 'Margin 6%',
       'rating': 4.8,
@@ -65,17 +67,17 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                     // Title & Subtitle
                     Text(
                       'Analitik Performa Bisnis',
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppTheme.onSurface,
-                      ),
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.onSurface,
+                          ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'Wawasan mendalam pertumbuhan omzet, tren penjualan ramai, dan performa meja',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppTheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.bodySmall
+                          ?.copyWith(color: AppTheme.onSurfaceVariant),
                     ),
                     const SizedBox(height: AppTheme.spaceMd),
 
@@ -117,7 +119,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       child: OutlinedButton.icon(
                         onPressed: () {},
                         icon: const Icon(Icons.download),
-                        label: const Text('Unduh Laporan Lengkap (PDF / Excel)'),
+                        label: const Text(
+                          'Unduh Laporan Lengkap (PDF / Excel)',
+                        ),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             horizontal: AppTheme.spaceMd,
@@ -129,9 +133,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                     const SizedBox(height: AppTheme.spaceMd),
                     Text(
                       'Dilaporkan otomatis setiap 15 menit dari karir POS Selasar Kopi',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: AppTheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall
+                          ?.copyWith(color: AppTheme.onSurfaceVariant),
                     ),
                   ],
                 ),
@@ -166,10 +169,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             children: [
               GestureDetector(
                 onTap: () => Navigator.pop(context),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: AppTheme.onSurface,
-                ),
+                child: Icon(Icons.arrow_back, color: AppTheme.onSurface),
               ),
               const SizedBox(width: AppTheme.spaceMd),
               Expanded(
@@ -203,51 +203,50 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   Widget _buildPeriodTabs(BuildContext context) {
     final periods = [
-      {'label': 'Hari Ini vs Kemarin', 'value': 'today'},
-      {'label': 'Minggu Ini vs Pekan Lalu', 'value': 'week'},
+      {'label': 'Hari Ini', 'value': 'today'},
+      {'label': 'Minggu Ini', 'value': 'week'},
       {'label': 'Bulan Ini', 'value': 'month'},
+      {'label': 'Custom', 'value': 'custom'},
     ];
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: List.generate(
-          periods.length,
-          (index) {
-            final period = periods[index];
-            final isSelected = _selectedPeriod == period['value'];
+        children: List.generate(periods.length, (index) {
+          final period = periods[index];
+          final isSelected = _selectedPeriod == period['value'];
 
-            return Padding(
-              padding: EdgeInsets.only(right: index < periods.length - 1 ? 8 : 0),
-              child: GestureDetector(
-                onTap: () =>
-                    setState(() => _selectedPeriod = period['value'] as String),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isSelected ? AppTheme.secondary : AppTheme.surfaceContainer,
-                    borderRadius: BorderRadius.circular(AppTheme.radiusFull),
-                    boxShadow: isSelected ? [AppTheme.shadowSm] : null,
-                  ),
-                  child: Text(
-                    period['label'] as String,
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: isSelected
-                          ? AppTheme.onSecondary
-                          : AppTheme.onSurfaceVariant,
-                      fontWeight:
-                          isSelected ? FontWeight.w700 : FontWeight.w600,
-                    ),
+          return Padding(
+            padding: EdgeInsets.only(right: index < periods.length - 1 ? 8 : 0),
+            child: GestureDetector(
+              onTap: () =>
+                  setState(() => _selectedPeriod = period['value'] as String),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? AppTheme.secondary
+                      : AppTheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(AppTheme.radiusFull),
+                  boxShadow: isSelected ? [AppTheme.shadowSm] : null,
+                ),
+                child: Text(
+                  period['label'] as String,
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: isSelected
+                        ? AppTheme.onSecondary
+                        : AppTheme.onSurfaceVariant,
+                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        }),
       ),
     );
   }
@@ -359,9 +358,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 const SizedBox(height: AppTheme.spaceXs),
                 Text(
                   'Total Pelanggan',
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppTheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall
+                      ?.copyWith(color: AppTheme.onSurfaceVariant),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -399,9 +397,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 const SizedBox(height: AppTheme.spaceXs),
                 Text(
                   'Rata-rata Keramahan',
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppTheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall
+                      ?.copyWith(color: AppTheme.onSurfaceVariant),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -447,7 +444,11 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   color: AppTheme.secondary,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.lightbulb, color: AppTheme.onSecondary, size: 20),
+                child: Icon(
+                  Icons.lightbulb,
+                  color: AppTheme.onSecondary,
+                  size: 20,
+                ),
               ),
               const SizedBox(width: AppTheme.spaceSm),
               Expanded(
@@ -493,9 +494,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 const SizedBox(height: 4),
                 Text(
                   'Tips Owner: Pelanggan yang memesan di Puncak 80% memesan Kopi Selasar Aren. Arean Buat Paket Bundling Jami Mak-Siang dengan Makanan ala Jumlah Kopi Minggu Ini hingga 65%.',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppTheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall
+                      ?.copyWith(color: AppTheme.onSurfaceVariant),
                 ),
               ],
             ),
@@ -555,9 +555,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         const SizedBox(height: AppTheme.spaceSm),
         Text(
           'Aktualitas Sesuai ± 30 Menit',
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: AppTheme.onSurfaceVariant,
-          ),
+          style: Theme.of(context).textTheme.labelSmall
+              ?.copyWith(color: AppTheme.onSurfaceVariant),
         ),
         const SizedBox(height: AppTheme.spaceMd),
         Container(
@@ -607,17 +606,17 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           width: 20,
           height: 80 * height,
           decoration: BoxDecoration(
-            color: height > 0.7 ? AppTheme.secondary : AppTheme.surfaceContainer,
+            color: height > 0.7
+                ? AppTheme.secondary
+                : AppTheme.surfaceContainer,
             borderRadius: BorderRadius.circular(AppTheme.radiusSm),
           ),
         ),
         const SizedBox(height: 4),
         Text(
           time,
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: AppTheme.onSurfaceVariant,
-            fontSize: 10,
-          ),
+          style: Theme.of(context).textTheme.labelSmall
+              ?.copyWith(color: AppTheme.onSurfaceVariant, fontSize: 10),
         ),
       ],
     );
@@ -693,8 +692,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       color: percent > 50
                           ? AppTheme.secondary
                           : percent > 20
-                              ? AppTheme.secondary.withValues(alpha: 0.5)
-                              : AppTheme.tertiary,
+                          ? AppTheme.secondary.withValues(alpha: 0.5)
+                          : AppTheme.tertiary,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -719,8 +718,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                     percent > 50
                         ? AppTheme.secondary
                         : percent > 20
-                            ? AppTheme.secondary.withValues(alpha: 0.6)
-                            : AppTheme.tertiary,
+                        ? AppTheme.secondary.withValues(alpha: 0.6)
+                        : AppTheme.tertiary,
                   ),
                 ),
               ),
@@ -791,10 +790,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     );
   }
 
-  Widget _buildProductRow(
-    BuildContext context,
-    Map<String, dynamic> product,
-  ) {
+  Widget _buildProductRow(BuildContext context, Map<String, dynamic> product) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppTheme.spaceSm),
       child: Container(
@@ -837,9 +833,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   ),
                   Text(
                     product['qty'],
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: AppTheme.onSurfaceVariant,
-                    ),
+                    style: Theme.of(context).textTheme.labelSmall
+                        ?.copyWith(color: AppTheme.onSurfaceVariant),
                   ),
                 ],
               ),
@@ -863,9 +858,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 ),
                 Text(
                   product['status'],
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppTheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall
+                      ?.copyWith(color: AppTheme.onSurfaceVariant),
                 ),
               ],
             ),
@@ -881,10 +875,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
       children: [
         Text(
           '⚠️ PERLU EVALUASI (SLOW-MOVING ITEMS)',
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: AppTheme.error,
-            fontWeight: FontWeight.w700,
-          ),
+          style: Theme.of(context).textTheme.labelSmall
+              ?.copyWith(color: AppTheme.error, fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: AppTheme.spaceSm),
         ..._slowMovingItems.map((item) => _buildSlowMovingRow(context, item)),
@@ -935,9 +927,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   ),
                   Text(
                     item['qty'],
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: AppTheme.onSurfaceVariant,
-                    ),
+                    style: Theme.of(context).textTheme.labelSmall
+                        ?.copyWith(color: AppTheme.onSurfaceVariant),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -949,7 +940,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: AppTheme.error.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(AppTheme.radiusSm),

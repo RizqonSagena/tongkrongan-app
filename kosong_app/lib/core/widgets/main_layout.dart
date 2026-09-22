@@ -26,11 +26,20 @@ class MainLayout extends StatefulWidget {
   });
 
   @override
-  State<MainLayout> createState() => _MainLayoutState();
+  State<MainLayout> createState() => MainLayoutState();
 }
 
-class _MainLayoutState extends State<MainLayout> {
+class MainLayoutState extends State<MainLayout> {
   int _currentIndex = 0;
+
+  /// Switch to a specific tab index from child screens
+  void switchToTab(int index) {
+    if (index >= 0 && index < _screens.length) {
+      setState(() {
+        _currentIndex = index;
+      });
+    }
+  }
 
   List<Widget> get _customerScreens => [
     const ExploreScreen(),

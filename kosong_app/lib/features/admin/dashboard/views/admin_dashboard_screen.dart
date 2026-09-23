@@ -6,7 +6,6 @@ import '../../../../core/themes/app_theme.dart';
 import '../../../../core/widgets/main_layout.dart';
 import '../../notifications/views/admin_notifications_screen.dart';
 import '../../store_detail/views/admin_store_detail_screen.dart';
-import '../../product_management/views/add_menu_screen.dart';
 import '../../profile/views/admin_activity_screen.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
@@ -56,14 +55,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
       'color': AppTheme.secondary.withValues(alpha: 0.15),
       'textColor': AppTheme.secondary,
       'tabIndex': 1,
-    },
-    {
-      'number': '3',
-      'label': 'Reservasi / Jad...',
-      'description': 'Koordinasi kedai',
-      'color': AppTheme.tertiary.withValues(alpha: 0.15),
-      'textColor': AppTheme.tertiary,
-      'tabIndex': -1, // snackbar
     },
     {
       'number': '7',
@@ -376,18 +367,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
         const SizedBox(width: AppTheme.spaceSm),
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const AddMenuScreen()),
-              );
-            },
+            onPressed: () => _switchTab(1),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppTheme.secondary,
               padding: const EdgeInsets.symmetric(vertical: AppTheme.spaceSm),
             ),
             icon: const Icon(Icons.add),
-            label: const Text('Tambah Menu/Produk'),
+            label: const Text('Kelola Menu Kedai'),
           ),
         ),
       ],
@@ -409,7 +395,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
               ),
             ),
             Text(
-              '4 Pintasan',
+              '3 Pintasan',
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
                 color: AppTheme.secondary,
                 fontWeight: FontWeight.w700,
@@ -539,13 +525,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
               Row(
                 children: [
                   Container(
-                    width: 40,
-                    height: 40,
+                    width: 56,
+                    height: 56,
                     decoration: BoxDecoration(
-                      color: AppTheme.secondary,
-                      borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+                      borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                      image: const DecorationImage(
+                        image: NetworkImage('https://images.unsplash.com/photo-1521017973422-fbb20404019c?w=100&h=100&fit=crop'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    child: Icon(Icons.storefront, color: AppTheme.onSecondary),
                   ),
                   const SizedBox(width: AppTheme.spaceSm),
                   Expanded(
@@ -582,6 +570,16 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                   style: Theme.of(context).textTheme.labelSmall
                       ?.copyWith(color: AppTheme.onSurfaceVariant),
                 ),
+              ),
+              const SizedBox(height: AppTheme.spaceSm),
+              Row(
+                children: [
+                  _buildPhotoThumb('https://images.unsplash.com/photo-1521017973422-fbb20404019c?w=80&h=60&fit=crop'),
+                  const SizedBox(width: 4),
+                  _buildPhotoThumb('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=80&h=60&fit=crop'),
+                  const SizedBox(width: 4),
+                  _buildPhotoThumb('https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=80&h=60&fit=crop'),
+                ],
               ),
               const SizedBox(height: AppTheme.spaceSm),
               SizedBox(
@@ -639,6 +637,28 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
               _buildActivityItem(context, _recentActivities[index]),
         ),
       ],
+    );
+  }
+
+  Widget _buildPhotoThumb(String url) {
+    return Expanded(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+        child: Image.network(
+          url,
+          height: 48,
+          fit: BoxFit.cover,
+          loadingBuilder: (context, child, progress) {
+            if (progress == null) return child;
+            return Container(height: 48, color: AppTheme.surfaceContainer);
+          },
+          errorBuilder: (_, __, ___) => Container(
+            height: 48,
+            color: AppTheme.surfaceContainer,
+            child: Icon(Icons.image, size: 16, color: AppTheme.onSurfaceVariant),
+          ),
+        ),
+      ),
     );
   }
 

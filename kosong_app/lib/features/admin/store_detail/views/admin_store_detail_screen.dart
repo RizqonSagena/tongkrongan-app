@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/themes/app_theme.dart';
 import '../../../../core/data/admin_store_data.dart';
 import 'admin_store_edit_screen.dart';
+import '../../product_management/views/add_menu_screen.dart';
 
 class AdminStoreDetailScreen extends StatefulWidget {
   final String storeId;
@@ -21,10 +22,30 @@ class _AdminStoreDetailScreenState extends State<AdminStoreDetailScreen> {
   }
 
   final List<Map<String, dynamic>> _menuItems = [
-    {'name': 'Kopi Hitam', 'price': 'Rp12.000', 'category': 'Minuman'},
-    {'name': 'Es Kopi Susu', 'price': 'Rp18.000', 'category': 'Minuman'},
-    {'name': 'Croissant Cokelat', 'price': 'Rp22.000', 'category': 'Pastry'},
-    {'name': 'Teh Tarik', 'price': 'Rp10.000', 'category': 'Minuman'},
+    {
+      'name': 'Kopi Hitam',
+      'price': 'Rp12.000',
+      'category': 'Minuman',
+      'image': 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=60&h=60&fit=crop',
+    },
+    {
+      'name': 'Es Kopi Susu',
+      'price': 'Rp18.000',
+      'category': 'Minuman',
+      'image': 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=60&h=60&fit=crop',
+    },
+    {
+      'name': 'Croissant Cokelat',
+      'price': 'Rp22.000',
+      'category': 'Pastry',
+      'image': 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=60&h=60&fit=crop',
+    },
+    {
+      'name': 'Teh Tarik',
+      'price': 'Rp10.000',
+      'category': 'Minuman',
+      'image': 'https://images.unsplash.com/photo-1521017973422-fbb20404019c?w=60&h=60&fit=crop',
+    },
   ];
 
   final List<Map<String, dynamic>> _activityHistory = [
@@ -118,11 +139,7 @@ class _AdminStoreDetailScreenState extends State<AdminStoreDetailScreen> {
                           const SizedBox(height: AppTheme.spaceLg),
 
                           // Menu list
-                          _buildSection(
-                            context,
-                            'Daftar Menu',
-                            _buildMenuList(context),
-                          ),
+                          _buildMenuSection(context),
                           const SizedBox(height: AppTheme.spaceLg),
 
                           // Curator notes
@@ -528,6 +545,61 @@ class _AdminStoreDetailScreenState extends State<AdminStoreDetailScreen> {
     );
   }
 
+  Widget _buildMenuSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Daftar Menu',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: AppTheme.onSurface,
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const AddMenuScreen(),
+                  ),
+                );
+                setState(() {});
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: AppTheme.secondary,
+                  borderRadius: BorderRadius.circular(AppTheme.radiusFull),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.add, size: 14, color: AppTheme.onSecondary),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Tambah Menu',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.onSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppTheme.spaceSm),
+        _buildMenuList(context),
+      ],
+    );
+  }
+
   Widget _buildMenuList(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -541,32 +613,45 @@ class _AdminStoreDetailScreenState extends State<AdminStoreDetailScreen> {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppTheme.spaceMd,
-                  vertical: AppTheme.spaceSm,
-                ),
+                padding: const EdgeInsets.all(AppTheme.spaceSm),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item['name'] as String,
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.onSurface,
-                          ),
+                    // Gambar menu
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                      child: Image.network(
+                        item['image'] as String,
+                        width: 48,
+                        height: 48,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Container(
+                          width: 48,
+                          height: 48,
+                          color: AppTheme.surfaceContainer,
+                          child: Icon(Icons.fastfood, size: 20, color: AppTheme.onSurfaceVariant),
                         ),
-                        Text(
-                          item['category'] as String,
-                          style:
-                              Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: AppTheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(width: AppTheme.spaceSm),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item['name'] as String,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.onSurface,
+                            ),
                           ),
-                        ),
-                      ],
+                          Text(
+                            item['category'] as String,
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: AppTheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Text(
                       item['price'] as String,
@@ -579,10 +664,7 @@ class _AdminStoreDetailScreenState extends State<AdminStoreDetailScreen> {
                 ),
               ),
               if (index < _menuItems.length - 1)
-                Divider(
-                  height: 1,
-                  color: AppTheme.outlineVariant,
-                ),
+                Divider(height: 1, color: AppTheme.outlineVariant),
             ],
           );
         }),
@@ -691,32 +773,54 @@ class _AdminStoreDetailScreenState extends State<AdminStoreDetailScreen> {
     bool isVerified,
   ) {
     if (status == 'aktif') {
-      return Row(
+      return Column(
         children: [
-          Expanded(
-            child: OutlinedButton(
-              onPressed: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => AdminStoreEditScreen(
-                      store: Map<String, dynamic>.from(_store),
-                    ),
-                  ),
-                );
-                if (result == true) setState(() {});
-              },
-              child: const Text('Edit Info'),
-            ),
-          ),
-          const SizedBox(width: AppTheme.spaceSm),
-          Expanded(
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.tertiary,
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AdminStoreEditScreen(
+                          store: Map<String, dynamic>.from(_store),
+                        ),
+                      ),
+                    );
+                    if (result == true) setState(() {});
+                  },
+                  child: const Text('Edit Info'),
+                ),
               ),
-              child: const Text('Terverifikasi'),
+              const SizedBox(width: AppTheme.spaceSm),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.tertiary,
+                  ),
+                  child: const Text('Terverifikasi'),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppTheme.spaceSm),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AddMenuScreen()),
+                );
+                setState(() {});
+              },
+              icon: Icon(Icons.restaurant_menu, color: AppTheme.secondary),
+              label: Text('Tambah Menu / Produk', style: TextStyle(color: AppTheme.secondary)),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: AppTheme.secondary),
+              ),
             ),
           ),
         ],

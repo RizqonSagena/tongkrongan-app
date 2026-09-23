@@ -21,6 +21,17 @@ import '../../features/owner/chat_management/views/owner_chat_detail_screen.dart
 import '../../features/owner/profile/views/hpp_menu_screen.dart';
 import '../../features/owner/profile/views/hpp_calculator_screen.dart';
 import '../../features/owner/orders/views/orders_screen.dart';
+// Admin Routes
+import '../../features/admin/notifications/views/admin_notifications_screen.dart';
+import '../../features/admin/store_detail/views/admin_store_detail_screen.dart';
+import '../../features/admin/store_detail/views/admin_store_edit_screen.dart';
+import '../../features/admin/store_management/views/add_store_screen.dart';
+import '../../features/admin/chat_management/views/admin_chat_detail_screen.dart';
+import '../../features/admin/profile/views/admin_reviews_screen.dart';
+import '../../features/admin/product_management/views/menu_request_screen.dart';
+import '../../features/admin/product_management/views/add_menu_screen.dart';
+import '../../features/admin/profile/views/admin_activity_screen.dart';
+import '../../features/admin/content_management/views/content_form_screen.dart';
 
 class AppRouter {
   static const String splash = '/';
@@ -48,6 +59,18 @@ class AppRouter {
   static const String ownerHppMenu = '/owner/hpp-menu';
   static const String ownerHppCalculator = '/owner/hpp-calculator';
   static const String ownerOrders = '/owner/orders';
+
+  // Admin Routes
+  static const String adminNotifications = '/admin/notifications';
+  static const String adminStoreDetail = '/admin/store-detail';
+  static const String adminStoreEdit = '/admin/store-edit';
+  static const String adminAddStore = '/admin/add-store';
+  static const String adminChatDetail = '/admin/chat-detail';
+  static const String adminReviews = '/admin/reviews';
+  static const String adminMenuRequest = '/admin/menu-request';
+  static const String adminAddMenu = '/admin/add-menu';
+  static const String adminActivity = '/admin/activity';
+  static const String adminContentForm = '/admin/content-form';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -177,6 +200,67 @@ class AppRouter {
       case ownerOrders:
         return MaterialPageRoute(
           builder: (_) => const OrdersScreen(),
+          settings: settings,
+        );
+      
+      // Admin Route Builders
+      case adminNotifications:
+        return MaterialPageRoute(
+          builder: (_) => const AdminNotificationsScreen(),
+          settings: settings,
+        );
+      case adminStoreDetail:
+        return MaterialPageRoute(
+          builder: (_) => AdminStoreDetailScreen(
+            storeId: settings.arguments as String? ?? '',
+          ),
+          settings: settings,
+        );
+      case adminStoreEdit:
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(
+          builder: (_) => AdminStoreEditScreen(
+            store: args ?? {},
+          ),
+          settings: settings,
+        );
+      case adminAddStore:
+        return MaterialPageRoute(
+          builder: (_) => const AddStoreScreen(),
+          settings: settings,
+        );
+      case adminChatDetail:
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(
+          builder: (_) => AdminChatDetailScreen(
+            conversation: args ?? {},
+          ),
+          settings: settings,
+        );
+      case adminReviews:
+        return MaterialPageRoute(
+          builder: (_) => const AdminReviewsScreen(),
+          settings: settings,
+        );
+      case adminMenuRequest:
+        return MaterialPageRoute(
+          builder: (_) => const MenuRequestScreen(),
+          settings: settings,
+        );
+      case adminAddMenu:
+        return MaterialPageRoute(
+          builder: (_) => const AddMenuScreen(),
+          settings: settings,
+        );
+      case adminActivity:
+        return MaterialPageRoute(
+          builder: (_) => const AdminActivityScreen(),
+          settings: settings,
+        );
+      case adminContentForm:
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(
+          builder: (_) => ContentFormScreen(content: args),
           settings: settings,
         );
       

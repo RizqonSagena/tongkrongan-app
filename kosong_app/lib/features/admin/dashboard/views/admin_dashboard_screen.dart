@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 import '../../../../core/themes/app_theme.dart';
+import '../../../../core/widgets/main_layout.dart';
+import '../../notifications/views/admin_notifications_screen.dart';
+import '../../store_detail/views/admin_store_detail_screen.dart';
+import '../../product_management/views/add_menu_screen.dart';
+import '../../profile/views/admin_activity_screen.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -14,7 +19,7 @@ class AdminDashboardScreen extends StatefulWidget {
 class _AdminDashboardScreenState extends State<AdminDashboardScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _pulseController;
-  late Animation<double> _pulseAnimation;
+
 
   final List<Map<String, dynamic>> _recentActivities = [
     {
@@ -50,6 +55,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
       'description': 'Verifikasi dokumen',
       'color': AppTheme.secondary.withValues(alpha: 0.15),
       'textColor': AppTheme.secondary,
+      'tabIndex': 1,
     },
     {
       'number': '3',
@@ -57,6 +63,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
       'description': 'Koordinasi kedai',
       'color': AppTheme.tertiary.withValues(alpha: 0.15),
       'textColor': AppTheme.tertiary,
+      'tabIndex': -1, // snackbar
     },
     {
       'number': '7',
@@ -64,6 +71,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
       'description': 'Kurasi publikasi',
       'color': AppTheme.secondary.withValues(alpha: 0.15),
       'textColor': AppTheme.secondary,
+      'tabIndex': 2,
     },
     {
       'number': '5',
@@ -71,6 +79,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
       'description': 'Eskalasi admin',
       'color': AppTheme.error.withValues(alpha: 0.15),
       'textColor': AppTheme.error,
+      'tabIndex': 3,
     },
   ];
 
@@ -81,16 +90,17 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     )..repeat(reverse: false);
-
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.3).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
-    );
   }
 
   @override
   void dispose() {
     _pulseController.dispose();
     super.dispose();
+  }
+
+  void _switchTab(int index) {
+    final mainLayout = context.findAncestorStateOfType<MainLayoutState>();
+    mainLayout?.switchToTab(index);
   }
 
   @override
@@ -198,19 +208,29 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AdminNotificationsScreen(),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.notifications_outlined),
               ),
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: const DecorationImage(
-                    image: NetworkImage(
-                      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
+              GestureDetector(
+                onTap: () => _switchTab(4),
+                child: Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: const DecorationImage(
+                      image: NetworkImage(
+                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
+                      ),
+                      fit: BoxFit.cover,
                     ),
-                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -261,22 +281,28 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
     return Row(
       children: [
         Expanded(
-          child: _buildKPICard(
-            context,
-            '🏪',
-            'Total',
-            '142',
-            'Mitra Kedai\n128 aktif, 14 review',
+          child: GestureDetector(
+            onTap: () => _switchTab(1),
+            child: _buildKPICard(
+              context,
+              '🏪',
+              'Total',
+              '142',
+              'Mitra Kedai\n128 aktif, 14 review',
+            ),
           ),
         ),
         const SizedBox(width: AppTheme.spaceSm),
         Expanded(
-          child: _buildKPICard(
-            context,
-            '✅',
-            'Live',
-            '128',
-            'Kedai Aktif\nTerkurasi & Online',
+          child: GestureDetector(
+            onTap: () => _switchTab(1),
+            child: _buildKPICard(
+              context,
+              '✅',
+              'Live',
+              '128',
+              'Kedai Aktif\nTerkurasi & Online',
+            ),
           ),
         ),
       ],
@@ -338,7 +364,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
       children: [
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () => _switchTab(1),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppTheme.secondary,
               padding: const EdgeInsets.symmetric(vertical: AppTheme.spaceSm),
@@ -350,7 +376,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
         const SizedBox(width: AppTheme.spaceSm),
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const AddMenuScreen()),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppTheme.secondary,
               padding: const EdgeInsets.symmetric(vertical: AppTheme.spaceSm),
@@ -396,7 +427,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
           childAspectRatio: 1.2,
           children: List.generate(
             _priorityTasks.length,
-            (index) => _buildTaskCard(context, _priorityTasks[index]),
+            (index) =>
+                _buildTaskCard(context, _priorityTasks[index]),
           ),
         ),
       ],
@@ -404,52 +436,66 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
   }
 
   Widget _buildTaskCard(BuildContext context, Map<String, dynamic> task) {
-    return Container(
-      decoration: BoxDecoration(
-        color: task['color'],
-        borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-      ),
-      padding: const EdgeInsets.all(AppTheme.spaceSm),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: task['textColor'],
-              shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: () {
+        final int tabIndex = task['tabIndex'] as int;
+        if (tabIndex >= 0) {
+          _switchTab(tabIndex);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Fitur Reservasi akan segera hadir'),
             ),
-            child: Center(
-              child: Text(
-                task['number'],
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppTheme.onSurface,
-                  fontWeight: FontWeight.w700,
+          );
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: task['color'],
+          borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+        ),
+        padding: const EdgeInsets.all(AppTheme.spaceSm),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: task['textColor'],
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  task['number'],
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: AppTheme.onSurface,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                task['label'],
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: AppTheme.onSurface,
-                  fontWeight: FontWeight.w700,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  task['label'],
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: AppTheme.onSurface,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  maxLines: 2,
                 ),
-                maxLines: 2,
-              ),
-              Text(
-                task['description'],
-                style: Theme.of(context).textTheme.labelSmall
-                    ?.copyWith(color: AppTheme.onSurfaceVariant, fontSize: 10),
-              ),
-            ],
-          ),
-        ],
+                Text(
+                  task['description'],
+                  style: Theme.of(context).textTheme.labelSmall
+                      ?.copyWith(color: AppTheme.onSurfaceVariant, fontSize: 10),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -541,7 +587,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            AdminStoreDetailScreen(storeId: '3'),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppTheme.secondary,
                   ),
@@ -581,7 +635,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
         const SizedBox(height: AppTheme.spaceMd),
         ...List.generate(
           _recentActivities.length,
-          (index) => _buildActivityItem(context, _recentActivities[index]),
+          (index) =>
+              _buildActivityItem(context, _recentActivities[index]),
         ),
       ],
     );
@@ -593,77 +648,91 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
   ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppTheme.spaceMd),
-      child: Container(
-        padding: const EdgeInsets.all(AppTheme.spaceMd),
-        decoration: BoxDecoration(
-          color: AppTheme.surfaceContainerLowest,
-          border: Border.all(color: AppTheme.outlineVariant),
-          borderRadius: BorderRadius.circular(AppTheme.radiusLg),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(AppTheme.spaceSm),
-              decoration: BoxDecoration(
-                color: activity['color'].withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-              ),
-              child: Icon(activity['icon'], color: activity['color'], size: 20),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const AdminActivityScreen(),
             ),
-            const SizedBox(width: AppTheme.spaceMd),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.all(AppTheme.spaceMd),
+          decoration: BoxDecoration(
+            color: AppTheme.surfaceContainerLowest,
+            border: Border.all(color: AppTheme.outlineVariant),
+            borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(AppTheme.spaceSm),
+                decoration: BoxDecoration(
+                  color: activity['color'].withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                ),
+                child: Icon(
+                  activity['icon'],
+                  color: activity['color'],
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: AppTheme.spaceMd),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      activity['title'],
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      activity['subtitle'],
+                      style: Theme.of(context).textTheme.bodySmall
+                          ?.copyWith(color: AppTheme.onSurfaceVariant),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppTheme.spaceSm),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    activity['title'],
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: AppTheme.onSurface,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: activity['color'].withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                    ),
+                    child: Text(
+                      activity['status'],
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: activity['color'],
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 4),
                   Text(
-                    activity['subtitle'],
-                    style: Theme.of(context).textTheme.bodySmall
-                        ?.copyWith(color: AppTheme.onSurfaceVariant),
+                    activity['time'],
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: AppTheme.onSurfaceVariant,
+                      fontSize: 10,
+                    ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(width: AppTheme.spaceSm),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: activity['color'].withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                  ),
-                  child: Text(
-                    activity['status'],
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: activity['color'],
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  activity['time'],
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppTheme.onSurfaceVariant,
-                    fontSize: 10,
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

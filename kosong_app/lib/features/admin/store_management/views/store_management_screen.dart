@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import '../../../../core/themes/app_theme.dart';
+import '../../../../core/data/admin_store_data.dart';
+import '../../notifications/views/admin_notifications_screen.dart';
+import '../../store_detail/views/admin_store_detail_screen.dart';
+import 'add_store_screen.dart';
 
 class StoreManagementScreen extends StatefulWidget {
   const StoreManagementScreen({super.key});
@@ -13,67 +17,6 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
   String _selectedStatus = 'semua';
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
-
-  final List<Map<String, dynamic>> _stores = [
-    {
-      'image': 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=200&h=200&fit=crop',
-      'name': 'Selasar Kopi & Ruang Diskusi',
-      'type': 'Coffee Shop & Coworking',
-      'location': 'Tebet, Jaks.',
-      'rating': 4.8,
-      'status': 'aktif',
-      'verified': true,
-      'updateTime': '14:20',
-      'owner': 'Dimas Prasetyo (Owner)',
-      'followers': 28,
-      'checkins': 6,
-      'comments': 1,
-    },
-    {
-      'image': 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=200&h=200&fit=crop',
-      'name': 'Kala Kopi & Ruang Cerita',
-      'type': 'Specialty Coffee',
-      'location': 'Tebet Barat',
-      'rating': 4.7,
-      'status': 'aktif',
-      'verified': true,
-      'updateTime': '19:40',
-      'owner': 'Sarah Amalia (Owner)',
-      'followers': 19,
-      'checkins': 8,
-      'comments': 0,
-    },
-    {
-      'image': 'https://images.unsplash.com/photo-1521017973422-fbb20404019c?w=200&h=200&fit=crop',
-      'name': 'Kopi Titik Temu Senja',
-      'type': 'Rooftop Coffee & Eatery',
-      'location': 'Pancoran',
-      'rating': 4.5,
-      'status': 'review',
-      'verified': false,
-      'updateTime': '2 jam lalu',
-      'owner': 'Reza Fahmi',
-      'followers': 0,
-      'checkins': 0,
-      'comments': 0,
-      'note': 'Catatan Tim Kurator: Foto operai dan menu lengkap sudah diupiah, butuh cek legalitas kemittraan dan surat domisili usaha.',
-    },
-    {
-      'image': 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=200&h=200&fit=crop',
-      'name': 'Warkop Barokah 24 Jam',
-      'type': 'Warkop Modern',
-      'location': 'Manggrai',
-      'rating': 0,
-      'status': 'nonaktif',
-      'verified': false,
-      'updateTime': 'Libur Renovasi',
-      'owner': 'Unknown',
-      'followers': 0,
-      'checkins': 0,
-      'comments': 0,
-      'note': 'Kunjungan publik di-pause sementara',
-    },
-  ];
 
   @override
   void dispose() {
@@ -106,7 +49,10 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                           // Title & Subtitle
                           Text(
                             'Manajemen Listing Kedai',
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
                               fontWeight: FontWeight.w700,
                               color: AppTheme.onSurface,
                             ),
@@ -114,7 +60,10 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                           const SizedBox(height: 4),
                           Text(
                             'Kelola kurasi, info operasional, dan status publikasi kedai mitra',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
                               color: AppTheme.onSurfaceVariant,
                             ),
                           ),
@@ -124,7 +73,15 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton.icon(
-                              onPressed: () {},
+                              onPressed: () async {
+                                final result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const AddStoreScreen(),
+                                  ),
+                                );
+                                if (result == true) setState(() {});
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppTheme.secondary,
                                 padding: const EdgeInsets.symmetric(
@@ -152,8 +109,10 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: AppTheme.tertiary.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                              color:
+                                  AppTheme.tertiary.withValues(alpha: 0.15),
+                              borderRadius:
+                                  BorderRadius.circular(AppTheme.radiusSm),
                             ),
                             child: Row(
                               children: [
@@ -175,7 +134,15 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                                 ),
                                 const Spacer(),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'Panduan kurasi akan segera hadir',
+                                        ),
+                                      ),
+                                    );
+                                  },
                                   child: Text(
                                     'Panduan Kurasi >',
                                     style: Theme.of(context)
@@ -274,7 +241,14 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AdminNotificationsScreen(),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.notifications_outlined),
               ),
             ],
@@ -309,17 +283,28 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
             color: AppTheme.onSurfaceVariant,
             onPressed: () {},
           ),
-          contentPadding: const EdgeInsets.symmetric(vertical: AppTheme.spaceSm),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: AppTheme.spaceSm),
         ),
       ),
     );
   }
 
   Widget _buildStatusTabs(BuildContext context) {
+    final activeCount =
+        AdminStoreData.stores.where((s) => s['status'] == 'aktif').length;
+    final reviewCount =
+        AdminStoreData.stores.where((s) => s['status'] == 'review').length;
+    final totalCount = AdminStoreData.stores.length;
+
     final statuses = [
-      {'label': 'Semua', 'value': 'semua', 'count': '142'},
-      {'label': 'Aktif', 'value': 'aktif', 'count': '128'},
-      {'label': 'Menunggu Review', 'value': 'review', 'count': '8'},
+      {'label': 'Semua', 'value': 'semua', 'count': '$totalCount'},
+      {'label': 'Aktif', 'value': 'aktif', 'count': '$activeCount'},
+      {
+        'label': 'Menunggu Review',
+        'value': 'review',
+        'count': '$reviewCount',
+      },
     ];
 
     return SingleChildScrollView(
@@ -332,10 +317,11 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
             final isSelected = _selectedStatus == status['value'];
 
             return Padding(
-              padding: EdgeInsets.only(right: index < statuses.length - 1 ? 8 : 0),
+              padding:
+                  EdgeInsets.only(right: index < statuses.length - 1 ? 8 : 0),
               child: GestureDetector(
-                onTap: () =>
-                    setState(() => _selectedStatus = status['value'] as String),
+                onTap: () => setState(
+                    () => _selectedStatus = status['value'] as String),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   padding: const EdgeInsets.symmetric(
@@ -346,15 +332,18 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                     color: isSelected
                         ? AppTheme.secondary
                         : AppTheme.surfaceContainer,
-                    borderRadius: BorderRadius.circular(AppTheme.radiusFull),
+                    borderRadius:
+                        BorderRadius.circular(AppTheme.radiusFull),
                     boxShadow: isSelected ? [AppTheme.shadowSm] : null,
                   ),
                   child: Row(
                     children: [
                       Text(
                         status['label'] as String,
-                        style:
-                            Theme.of(context).textTheme.labelSmall?.copyWith(
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelSmall
+                            ?.copyWith(
                           color: isSelected
                               ? AppTheme.onSecondary
                               : AppTheme.onSurfaceVariant,
@@ -371,12 +360,15 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                           color: isSelected
                               ? AppTheme.onSecondary.withValues(alpha: 0.2)
                               : AppTheme.outlineVariant,
-                          borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                          borderRadius:
+                              BorderRadius.circular(AppTheme.radiusSm),
                         ),
                         child: Text(
                           status['count'] as String,
-                          style:
-                              Theme.of(context).textTheme.labelSmall?.copyWith(
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall
+                              ?.copyWith(
                             color: isSelected
                                 ? AppTheme.onSecondary
                                 : AppTheme.onSurface,
@@ -402,9 +394,11 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
         padding: const EdgeInsets.symmetric(vertical: AppTheme.spaceLg),
         child: Column(
           children: [
-            Icon(Icons.store_outlined, size: 48, color: AppTheme.onSurfaceVariant),
+            Icon(Icons.store_outlined,
+                size: 48, color: AppTheme.onSurfaceVariant),
             const SizedBox(height: AppTheme.spaceMd),
-            Text('Tidak ada kedai', style: Theme.of(context).textTheme.titleSmall),
+            Text('Tidak ada kedai',
+                style: Theme.of(context).textTheme.titleSmall),
           ],
         ),
       ),
@@ -429,15 +423,45 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                 child: Image.network(
-                  store['image'],
+                  store['image'] ?? '',
                   width: 80,
                   height: 80,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      width: 80,
+                      height: 80,
+                      color: AppTheme.surfaceContainer,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppTheme.secondary,
+                        ),
+                      ),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) => Container(
                     width: 80,
                     height: 80,
-                    color: AppTheme.surfaceContainer,
-                    child: Icon(Icons.image, color: AppTheme.onSurfaceVariant),
+                    decoration: BoxDecoration(
+                      color: AppTheme.surfaceContainer,
+                      borderRadius:
+                          BorderRadius.circular(AppTheme.radiusMd),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.store,
+                            color: AppTheme.secondary, size: 28),
+                        Text(
+                          'Kedai',
+                          style: TextStyle(
+                              fontSize: 9,
+                              color: AppTheme.onSurfaceVariant),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -451,8 +475,11 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            store['name'],
-                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            store['name'] ?? '-',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(
                               fontWeight: FontWeight.w700,
                               color: AppTheme.onSurface,
                             ),
@@ -460,15 +487,17 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        if (store['verified'])
+                        if (store['verified'] == true)
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 6,
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: AppTheme.tertiary.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                              color: AppTheme.tertiary
+                                  .withValues(alpha: 0.15),
+                              borderRadius: BorderRadius.circular(
+                                  AppTheme.radiusSm),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -496,8 +525,9 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      store['type'],
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      store['type'] ?? store['category'] ?? '-',
+                      style:
+                          Theme.of(context).textTheme.labelSmall?.copyWith(
                         color: AppTheme.onSurfaceVariant,
                       ),
                     ),
@@ -505,25 +535,37 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                     Row(
                       children: [
                         Icon(Icons.location_on,
-                            size: 12, color: AppTheme.onSurfaceVariant),
+                            size: 12,
+                            color: AppTheme.onSurfaceVariant),
                         const SizedBox(width: 2),
-                        Text(
-                          store['location'],
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: AppTheme.onSurfaceVariant,
+                        Expanded(
+                          child: Text(
+                            store['location'] ?? store['area'] ?? '-',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                              color: AppTheme.onSurfaceVariant,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 6),
-                    if (store['rating'] > 0)
+                    if ((store['rating'] ?? 0) > 0)
                       Row(
                         children: [
-                          Icon(Icons.star, size: 14, color: AppTheme.secondary),
+                          Icon(Icons.star,
+                              size: 14, color: AppTheme.secondary),
                           const SizedBox(width: 2),
                           Text(
                             '${store['rating']}',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
                               fontWeight: FontWeight.w700,
                               color: AppTheme.onSurface,
                             ),
@@ -531,7 +573,10 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
                           const SizedBox(width: 4),
                           Text(
                             'Update ${store['updateTime']}',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
                               color: AppTheme.onSurfaceVariant,
                               fontSize: 10,
                             ),
@@ -550,35 +595,41 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
             children: [
               Icon(Icons.person, size: 14, color: AppTheme.onSurfaceVariant),
               const SizedBox(width: 4),
-              Text(
-                store['owner'],
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: AppTheme.onSurfaceVariant,
+              Expanded(
+                child: Text(
+                  store['owner'] ?? '-',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: AppTheme.onSurfaceVariant,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const Spacer(),
-              Icon(Icons.close, size: 14, color: AppTheme.onSurfaceVariant),
+              Icon(Icons.favorite_border,
+                  size: 14, color: AppTheme.onSurfaceVariant),
               const SizedBox(width: 2),
               Text(
-                '${store['followers']}',
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: AppTheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Icon(Icons.check_circle, size: 14, color: AppTheme.onSurfaceVariant),
-              const SizedBox(width: 2),
-              Text(
-                '${store['checkins']}',
+                '${store['followers'] ?? 0}',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: AppTheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(width: 8),
-              Icon(Icons.comment, size: 14, color: AppTheme.onSurfaceVariant),
+              Icon(Icons.check_circle_outline,
+                  size: 14, color: AppTheme.onSurfaceVariant),
               const SizedBox(width: 2),
               Text(
-                '${store['comments']}',
+                '${store['checkins'] ?? 0}',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: AppTheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(Icons.comment_outlined,
+                  size: 14, color: AppTheme.onSurfaceVariant),
+              const SizedBox(width: 2),
+              Text(
+                '${store['comments'] ?? 0}',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: AppTheme.onSurfaceVariant,
                 ),
@@ -614,14 +665,32 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AdminStoreDetailScreen(
+                              storeId: store['id']),
+                        ),
+                      );
+                      setState(() {});
+                    },
                     child: const Text('Detail'),
                   ),
                 ),
                 const SizedBox(width: AppTheme.spaceSm),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AdminStoreDetailScreen(
+                              storeId: store['id']),
+                        ),
+                      );
+                      setState(() {});
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.secondary,
                     ),
@@ -635,14 +704,71 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final reasonController = TextEditingController();
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Text('Tolak Pendaftaran'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text('Masukkan alasan penolakan:'),
+                              const SizedBox(height: 8),
+                              TextField(
+                                controller: reasonController,
+                                maxLines: 3,
+                                decoration: const InputDecoration(
+                                  hintText:
+                                      'Contoh: Dokumen legalitas belum lengkap.',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () => Navigator.pop(ctx),
+                                child: const Text('Batal')),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppTheme.error),
+                              onPressed: () {
+                                final idx = AdminStoreData.stores
+                                    .indexWhere(
+                                        (s) => s['id'] == store['id']);
+                                if (idx != -1) {
+                                  AdminStoreData.stores[idx]['status'] =
+                                      'nonaktif';
+                                  AdminStoreData.stores[idx]
+                                      ['rejectionReason'] =
+                                      reasonController.text;
+                                }
+                                Navigator.pop(ctx);
+                                setState(() {});
+                              },
+                              child: const Text('Tolak Kedai'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                     child: const Text('Tolak / Revisi'),
                   ),
                 ),
                 const SizedBox(width: AppTheme.spaceSm),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AdminStoreDetailScreen(
+                              storeId: store['id']),
+                        ),
+                      );
+                      setState(() {});
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.secondary,
                     ),
@@ -655,16 +781,70 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
             Row(
               children: [
                 Expanded(
-                  child: Text(
-                    'Lihat Detail',
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: AppTheme.primary,
-                      fontWeight: FontWeight.w700,
+                  child: GestureDetector(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AdminStoreDetailScreen(
+                              storeId: store['id']),
+                        ),
+                      );
+                      setState(() {});
+                    },
+                    child: Text(
+                      'Lihat Detail',
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelSmall
+                          ?.copyWith(
+                        color: AppTheme.primary,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('Aktifkan Kedai'),
+                        content: const Text(
+                          'Yakin ingin mengaktifkan kembali kedai ini?',
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx),
+                            child: const Text('Batal'),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppTheme.secondary,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(ctx);
+                              final idx = AdminStoreData.stores
+                                  .indexWhere(
+                                      (s) => s['id'] == store['id']);
+                              if (idx != -1) {
+                                AdminStoreData.stores[idx]['status'] =
+                                    'aktif';
+                              }
+                              setState(() {});
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Kedai berhasil diaktifkan'),
+                                ),
+                              );
+                            },
+                            child: const Text('Ya, Aktifkan'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppTheme.tertiary,
                   ),
@@ -678,22 +858,35 @@ class _StoreManagementScreenState extends State<StoreManagementScreen> {
   }
 
   List<Map<String, dynamic>> _filterStores() {
-    var filtered = _stores;
+    var filtered = List<Map<String, dynamic>>.from(AdminStoreData.stores);
 
     // Filter by status
     if (_selectedStatus == 'aktif') {
-      filtered = filtered.where((s) => s['status'] == 'aktif').toList();
+      filtered =
+          filtered.where((s) => s['status'] == 'aktif').toList();
     } else if (_selectedStatus == 'review') {
-      filtered = filtered.where((s) => s['status'] == 'review').toList();
+      filtered =
+          filtered.where((s) => s['status'] == 'review').toList();
     }
 
     // Filter by search query
     if (_searchQuery.isNotEmpty) {
       filtered = filtered
-          .where((s) =>
-              s['name'].toLowerCase().contains(_searchQuery.toLowerCase()) ||
-              s['owner'].toLowerCase().contains(_searchQuery.toLowerCase()) ||
-              s['location'].toLowerCase().contains(_searchQuery.toLowerCase()))
+          .where(
+            (s) =>
+                (s['name'] ?? '')
+                    .toLowerCase()
+                    .contains(_searchQuery.toLowerCase()) ||
+                (s['owner'] ?? '')
+                    .toLowerCase()
+                    .contains(_searchQuery.toLowerCase()) ||
+                (s['location'] ?? '')
+                    .toLowerCase()
+                    .contains(_searchQuery.toLowerCase()) ||
+                (s['area'] ?? '')
+                    .toLowerCase()
+                    .contains(_searchQuery.toLowerCase()),
+          )
           .toList();
     }
 

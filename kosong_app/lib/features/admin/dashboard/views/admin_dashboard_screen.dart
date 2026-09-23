@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'dart:ui';
+
 import '../../../../core/themes/app_theme.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
@@ -248,9 +250,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
         const SizedBox(height: 2),
         Text(
           'Pusat Kontrol & Kurasi Ekosistem Tongkrongan',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: AppTheme.onSurfaceVariant,
-          ),
+          style: Theme.of(context).textTheme.bodySmall
+              ?.copyWith(color: AppTheme.onSurfaceVariant),
         ),
       ],
     );
@@ -323,9 +324,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
           const SizedBox(height: 4),
           Text(
             description,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: AppTheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.labelSmall
+                ?.copyWith(color: AppTheme.onSurfaceVariant),
             maxLines: 2,
           ),
         ],
@@ -444,10 +444,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
               ),
               Text(
                 task['description'],
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: AppTheme.onSurfaceVariant,
-                  fontSize: 10,
-                ),
+                style: Theme.of(context).textTheme.labelSmall
+                    ?.copyWith(color: AppTheme.onSurfaceVariant, fontSize: 10),
               ),
             ],
           ),
@@ -476,9 +474,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
         const SizedBox(height: AppTheme.spaceMd),
         Text(
           'Tindakan prioritas operator hari ini',
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-            color: AppTheme.onSurfaceVariant,
-          ),
+          style: Theme.of(context).textTheme.labelSmall
+              ?.copyWith(color: AppTheme.onSurfaceVariant),
         ),
         const SizedBox(height: AppTheme.spaceMd),
         Container(
@@ -502,10 +499,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                       color: AppTheme.secondary,
                       borderRadius: BorderRadius.circular(AppTheme.radiusLg),
                     ),
-                    child: Icon(
-                      Icons.storefront,
-                      color: AppTheme.onSecondary,
-                    ),
+                    child: Icon(Icons.storefront, color: AppTheme.onSecondary),
                   ),
                   const SizedBox(width: AppTheme.spaceSm),
                   Expanded(
@@ -514,17 +508,16 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                       children: [
                         Text(
                           'Pendaftaran Baru',
-                          style:
-                              Theme.of(context).textTheme.labelMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AppTheme.onSurface,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: AppTheme.onSurface,
+                              ),
                         ),
                         Text(
                           'Verifikasi Kedai Baru: Kopi Titik Temu Tebet',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppTheme.onSurfaceVariant,
-                          ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: AppTheme.onSurfaceVariant),
                         ),
                       ],
                     ),
@@ -540,9 +533,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                 ),
                 child: Text(
                   '📍 Menunggu Cek Foto & Titik GPS\n🕐 Diajukan 25 menit lalu',
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: AppTheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall
+                      ?.copyWith(color: AppTheme.onSurfaceVariant),
                 ),
               ),
               const SizedBox(height: AppTheme.spaceSm),
@@ -617,11 +609,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                 color: activity['color'].withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(AppTheme.radiusMd),
               ),
-              child: Icon(
-                activity['icon'],
-                color: activity['color'],
-                size: 20,
-              ),
+              child: Icon(activity['icon'], color: activity['color'], size: 20),
             ),
             const SizedBox(width: AppTheme.spaceMd),
             Expanded(
@@ -638,9 +626,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                   const SizedBox(height: 2),
                   Text(
                     activity['subtitle'],
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppTheme.onSurfaceVariant,
-                    ),
+                    style: Theme.of(context).textTheme.bodySmall
+                        ?.copyWith(color: AppTheme.onSurfaceVariant),
                   ),
                 ],
               ),
